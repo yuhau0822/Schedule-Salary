@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule & Salary</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-container">
+    <!-- 左サイドバー -->
+    <aside class="sidebar">
+        <h1 class="app-title">Schedule & Salary</h1>
+        
+        <div class="salary-dashboard">
+            <div class="salary-row">
+                <span class="salary-label">今月の推定給与</span>
+                <div class="salary-amount">¥ <span id="monthlySalary">0</span></div>
+            </div>
+            
+            <ul id="jobSalaryBreakdown" class="job-salary-breakdown"></ul>
+
+            <div class="salary-row sub-salary">
+                <span class="salary-label">今年の累計収入</span>
+                <div class="salary-sub-amount">¥ <span id="annualSalary">0</span></div>
+            </div>
+            <div class="salary-row sub-salary highlight">
+                <span class="salary-label">扶養枠(150万)まで残り</span>
+                <div class="salary-sub-amount">¥ <span id="remainingSalary">1,500,000</span></div>
+            </div>
+            <button class="settings-btn" onclick="toggleSettingsModal()">バイト・カテゴリ設定</button>
+        </div>
+
+        <div class="day-details" id="dayDetails">
+            <div class="day-details-header">
+                <h3 id="selectedDateText">予定一覧</h3>
+                <!-- 「予定を追加」ボタンは削除しました -->
+            </div>
+            <ul id="dayEventList" class="event-list">
+                <li>日付を選択してください。</li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- メインコンテンツ -->
+    <main class="main-content">
+        <div class="calendar-header">
+            <button onclick="prevMonth()">◀</button>
+            <h2 id="monthYear">2026.10</h2>
+            <button onclick="nextMonth()">▶</button>
+        </div>
+        
+        <!-- コピーモード時の案内メッセージ -->
+        <div id="copyModeBanner" class="copy-banner" style="display: none;">
+            <span id="copyModeText">ペーストしたい日付を選択してください (選択中: 0日)</span>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="openMultiCopyModal()" style="background: #2ecc71; color: #0A2947; font-weight: bold;">完了して次へ</button>
+                <button onclick="cancelCopyMode()" style="background: transparent; border: 1px solid #F3E4C9;">キャンセル</button>
+            </div>
+        </div>
+
+        <div class="calendar">
+            <div class="weekdays">
+                <div class="sun">SUN</div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div class="sat">SAT</div>
+            </div>
+            <div class="days" id="calendarDays"></div>
+        </div>
+    </main>
+</div>
+
+<!-- モーダル群 (予定追加・設定) -->
+<div id="scheduleModal" class="modal">
+    <div class="modal-content schedule-modal-content">
+        <span class="close-btn" onclick="closeScheduleModal()">&times;</span>
+        <h2 id="formTitle">予定を追加</h2>
+        
+        <div class="form-group">
+            <div id="singleDateInputArea">
+                <label>日付</label>
+                <input type="date" id="dateInput" required>
+            </div>
+            
+            <div id="multiDateDisplayArea" style="display: none; background: #fcfbf8; padding: 10px; border: 1px solid #D3D4C0; border-radius: 4px; max-height: 100px; overflow-y: auto;">
+                <label>選択中の日付 (クリックで解除)</label>
+                <div id="selectedDatesList" class="selected-dates-tags"></div>
+            </div>
+
+            <label>時間 (開始 〜 終了)</label>
+            <div class="time-inputs">
+                <input type="time" id="timeInput" required>
+                <span>〜</span>
+                <input type="time" id="endTimeInput" placeholder="終了(未定可)">
+            </div>
+            
+            <label>タイトル</label>
+            <input type="text" id="titleInput" placeholder="予定のタイトル" required>
+            
+            <label>カテゴリ</label>
+            <select id="categoryInput"></select>
+            
+            <button class="submit-btn" id="submitBtn" onclick="addOrUpdateSchedule()">予定を登録</button>
+        </div>
+    </div>
+</div>
+
+<div id="settingsModal" class="modal">
+    <div class="modal-content settings-modal-content">
+        <span class="close-btn" onclick="toggleSettingsModal()">&times;</span>
+        <h2>設定</h2>
+        
+        <div class="settings-section">
+            <h3>予定のカテゴリ管理</h3>
+            <ul id="categoryList" class="setting-list"></ul>
+            <div class="add-setting">
+                <input type="hidden" id="editCategoryId">
+                <input type="text" id="newCategoryName" placeholder="カテゴリ名">
+                <input type="color" id="newCategoryColor" value="#0A2947">
+                <button id="catSubmitBtn" onclick="addOrUpdateCategory()">追加</button>
+                <button id="catCancelBtn" onclick="cancelCategoryEdit()" style="display:none; background:transparent; border:1px solid #8B5E3C; color:#8B5E3C;">取消</button>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>バイト先・給与設定</h3>
+            <p class="note-text">※ バイト名はカテゴリ名と完全に一致させてください</p>
+            <ul id="jobList" class="setting-list"></ul>
+            <div class="add-job-form">
+                <input type="hidden" id="editJobId">
+                <input type="text" id="newJobName" placeholder="バイト先名">
+                <input type="number" id="newJobWage" placeholder="基本時給" step="10">
+                <div class="flex-row">
+                    <input type="number" id="newJobNightWage" placeholder="深夜時給(22時〜)" step="10">
+                    <input type="number" id="newJobTransport" placeholder="交通費/日" step="10">
+                </div>
+                <button id="jobSubmitBtn" onclick="addOrUpdateJob()">追加</button>
+                <button id="jobCancelBtn" onclick="cancelJobEdit()" style="display:none; background:transparent; border:1px solid #8B5E3C; color:#8B5E3C;">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
