@@ -189,7 +189,7 @@
 
         .bottom-nav { display: none; }
 
-                /* ================================
+        /* ================================
            ★ スマホ用レスポンシブ対応
         ================================ */
         @media screen and (max-width: 768px) {
@@ -315,6 +315,48 @@
             .flex-row { flex-direction: column; gap: 8px; }
         }
 
+        /* ================================
+           ★ PC用のポップアップ（モーダル）対応
+        ================================ */
+        @media screen and (min-width: 769px) {
+            .page-content {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 80%;
+                max-width: 600px;
+                max-height: 85vh;
+                background: rgba(243, 228, 201, 0.95);
+                backdrop-filter: var(--ios-blur);
+                -webkit-backdrop-filter: var(--ios-blur);
+                border-radius: var(--ios-radius-lg);
+                box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+                border: 1px solid rgba(255,255,255,0.5);
+                z-index: 100;
+            }
+            .pc-close-btn {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: rgba(10,41,71,0.08);
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 1.2em;
+                cursor: pointer;
+                color: var(--ios-text-sub);
+                transition: background 0.2s;
+                z-index: 10;
+            }
+            .pc-close-btn:hover { background: rgba(10,41,71,0.15); color: var(--ios-text-main); }
+        }
+        @media screen and (max-width: 768px) {
+            .pc-close-btn { display: none; } /* スマホでは非表示 */
+        }
     </style>
 </head>
 <body>
@@ -379,6 +421,7 @@
 
     <!-- バイト・カテゴリ設定画面 -->
     <main class="page-content" id="categoryContent">
+        <span class="pc-close-btn" onclick="switchTab('calendar')">&times;</span>
         <h2>バイト・カテゴリ設定</h2>
         <div class="settings-section">
             <h3>予定のカテゴリ管理</h3>
@@ -419,6 +462,7 @@
 
     <!-- 一般設定画面 -->
     <main class="page-content" id="settingsContent">
+        <span class="pc-close-btn" onclick="switchTab('calendar')">&times;</span>
         <h2>設定</h2>
         <div class="form-group">
             <label>テーマカラー</label>
@@ -623,6 +667,7 @@ if (fixIds(categories)) localStorage.setItem('adv_categories', JSON.stringify(ca
 if (fixIds(jobs)) localStorage.setItem('adv_jobs', JSON.stringify(jobs));
 
 function switchTab(tab) {
+    const isMobile = window.innerWidth <= 768; // スマホかどうか判定
     const sidebar = document.getElementById('sidebar');
     const mainCal = document.getElementById('mainContent');
     const mainCat = document.getElementById('categoryContent');
@@ -644,13 +689,13 @@ function switchTab(tab) {
         document.getElementById('navSalary').classList.add('active');
     } else if(tab === 'category') {
         sidebar.classList.remove('mobile-active');
-        mainCal.style.display = 'none';
+        mainCal.style.display = isMobile ? 'none' : 'flex'; // PCならカレンダーを残す
         mainCat.style.display = 'flex';
         mainSet.style.display = 'none';
         document.getElementById('navCategory').classList.add('active');
     } else if(tab === 'settings') {
         sidebar.classList.remove('mobile-active');
-        mainCal.style.display = 'none';
+        mainCal.style.display = isMobile ? 'none' : 'flex'; // PCならカレンダーを残す
         mainCat.style.display = 'none';
         mainSet.style.display = 'flex';
         document.getElementById('themeSelect').value = appSettings.theme || 'default';
