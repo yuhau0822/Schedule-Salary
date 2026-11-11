@@ -95,7 +95,6 @@
         .calendar-header { display: flex; justify-content: space-between; align-items: center; padding: 25px 40px 15px; }
         .calendar-header button { background: var(--ios-surface-solid); border: 1px solid var(--ios-border); border-radius: 50%; width: 44px; height: 44px; font-size: 1.2em; color: var(--ios-text-main); cursor: pointer; box-shadow: 0 2px 8px rgba(10,41,71,0.04); transition: all 0.2s ease; display: flex; justify-content: center; align-items: center; }
         .calendar-header button:hover { background: #D3D4C0; transform: scale(1.05);}
-        .calendar-header .today-btn { width: auto; padding: 0 20px; border-radius: 20px; font-size: 0.95em; font-weight: bold; }
         
         /* 検索バー */
         .search-container { padding: 0 40px 10px; position: relative; }
@@ -150,6 +149,8 @@
         .submit-btn { padding: 16px; background-color: var(--ios-accent); color: white; border: none; border-radius: var(--ios-radius-md); cursor: pointer; font-weight: 700; font-size: 1.1em; margin-top: 10px; transition: background 0.2s, transform 0.1s; width: 100%; }
         .submit-btn:hover { background-color: var(--ios-accent-hover); }
         .submit-btn:active { transform: scale(0.97); }
+        .secondary-btn { background-color: transparent; border: 1px solid var(--ios-border); color: var(--ios-text-main); margin-top: 5px; }
+        .secondary-btn:hover { background-color: rgba(0,0,0,0.05); }
         
         .day-list-modal-content { max-width: 450px; padding: 25px; }
         .day-list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--ios-border); padding-bottom: 15px; }
@@ -239,7 +240,12 @@
                 height: 100%;
                 padding-bottom: 100px;
             }
-            .page-content { padding: 20px 15px 100px; }
+            /* ★ カテゴリ画面全幅表示対応 */
+            .page-content { padding: 20px 0 100px; }
+            .page-content h2, .settings-section h3, .note-text { padding: 0 15px; }
+            .settings-section { max-width: 100%; }
+            .setting-list li { border-radius: 0; margin-bottom: 2px; border-left: none; border-right: none; }
+            .add-setting, .add-job-form { border-radius: 0; margin-left: 0; margin-right: 0; }
             
             .sidebar {
                 width: 100%;
@@ -255,22 +261,26 @@
             .salary-dashboard { padding: 15px; border-bottom: none;}
             .calendar-header { padding: 15px 15px 10px; }
             .calendar-header button { width: 32px; height: 32px; font-size: 0.9em; }
-            .calendar-header .today-btn { width: auto; padding: 0 12px; }
             
             .search-container { padding: 0 15px 10px; }
             .search-results { left: 15px; right: 15px; }
 
             .calendar { padding: 0; }
             .weekdays { padding: 5px 0; font-size: 0.75em; border-bottom: 1px solid var(--ios-border); margin-bottom: 0; }
+            
+            /* ★ スマホカレンダーの今日の数字中央寄せ対応 */
             .day { 
                 padding: 2px; 
                 min-height: 70px;
+                align-items: center; /* 追加：子要素を中央に */
             }
             .day:hover { background: transparent; }
             .day.today { background: rgba(255,255,255,0.4); }
-            .day.today .day-number { width: 22px; height: 22px; font-size: 0.9em; margin: 0 auto 2px; margin-left: 0;}
-            .day-number { font-size: 0.8em; margin-bottom: 2px; align-self: center; } 
-            .events-container { gap: 1px; }
+            /* margin-left: 0 を削除し、margin: 0 auto 2px に統一 */
+            .day.today .day-number { width: 22px; height: 22px; font-size: 0.9em; margin: 0 auto 2px; }
+            .day-number { font-size: 0.8em; margin-bottom: 2px; align-self: center; text-align: center; } 
+            
+            .events-container { gap: 1px; width: 100%; }
             .event-label { font-size: 0.65em; padding: 2px 3px; border-radius: 2px; text-align: left; }
 
             .copy-banner { flex-direction: column; text-align: center; gap: 12px; padding: 15px; }
@@ -315,7 +325,6 @@
             <button onclick="prevMonth()">◀</button>
             <div style="display: flex; align-items: center; gap: 15px;">
                 <div id="monthYearDisplay" style="font-size: 1.8em; font-weight: 700; color: var(--ios-text-main); letter-spacing: -0.5px; cursor: pointer; transition: opacity 0.2s;" onclick="openMonthPickerModal()" onmouseover="this.style.opacity=0.7" onmouseout="this.style.opacity=1"></div>
-                <button class="today-btn" onclick="goToToday()">今日</button>
             </div>
             <button onclick="nextMonth()">▶</button>
         </div>
@@ -386,13 +395,39 @@
         <h2>設定</h2>
         <div class="form-group">
             <label>テーマカラー</label>
+            <!-- 30種類のテーマ追加 -->
             <select id="themeSelect" onchange="changeTheme()">
                 <option value="default">デフォルト (ベージュ系)</option>
-                <option value="dark">ダークモード</option>
-                <option value="blue">ブルー系</option>
-                <option value="colorhunt1">Colorhunt (レトロウォーム)</option>
-                <option value="colorhunt2">Colorhunt (ダーク＆シアン)</option>
-                <option value="colorhunt3">Colorhunt (ナチュラルグリーン)</option>
+                <option value="ch1">Colorhunt 1 (Warm Sunrise)</option>
+                <option value="ch2">Colorhunt 2 (Ocean Depth)</option>
+                <option value="ch3">Colorhunt 3 (Forest Mist)</option>
+                <option value="ch4">Colorhunt 4 (Pastel Dream)</option>
+                <option value="ch5">Colorhunt 5 (Coffee Bean)</option>
+                <option value="ch6">Colorhunt 6 (Sunset Glow)</option>
+                <option value="ch7">Colorhunt 7 (Berry Smoothie)</option>
+                <option value="ch8">Colorhunt 8 (Mint Choco)</option>
+                <option value="ch9">Colorhunt 9 (Lavender Field)</option>
+                <option value="ch10">Colorhunt 10 (Desert Sand)</option>
+                <option value="ch11">Colorhunt 11 (Cyber Neon)</option>
+                <option value="ch12">Colorhunt 12 (Autumn Leaves)</option>
+                <option value="ch13">Colorhunt 13 (Ice Glacier)</option>
+                <option value="ch14">Colorhunt 14 (Vintage Rose)</option>
+                <option value="ch15">Colorhunt 15 (Midnight City)</option>
+                <option value="ch16">Colorhunt 16 (Peach Fuzz)</option>
+                <option value="ch17">Colorhunt 17 (Olive Garden)</option>
+                <option value="ch18">Colorhunt 18 (Royal Purple)</option>
+                <option value="ch19">Colorhunt 19 (Lemonade Stand)</option>
+                <option value="ch20">Colorhunt 20 (Slate Stone)</option>
+                <option value="ch21">Colorhunt 21 (Coral Reef)</option>
+                <option value="ch22">Colorhunt 22 (Matcha Latte)</option>
+                <option value="ch23">Colorhunt 23 (Plum Wine)</option>
+                <option value="ch24">Colorhunt 24 (Sky Blue)</option>
+                <option value="ch25">Colorhunt 25 (Caramel Macchiato)</option>
+                <option value="ch26">Colorhunt 26 (Cherry Blossom)</option>
+                <option value="ch27">Colorhunt 27 (Deep Emerald)</option>
+                <option value="ch28">Colorhunt 28 (Twilight Sky)</option>
+                <option value="ch29">Colorhunt 29 (Honey Bee)</option>
+                <option value="ch30">Colorhunt 30 (Graphite)</option>
             </select>
             
             <label>フォント</label>
@@ -442,6 +477,8 @@
             <span style="font-weight: bold; color: var(--ios-text-sub);">月</span>
         </div>
         <button class="submit-btn" onclick="applyMonthPicker()" style="margin-top: 20px;">移動する</button>
+        <!-- ★ 「今日に戻る」ボタンをここへ移動 -->
+        <button class="submit-btn secondary-btn" onclick="goToToday(); closeMonthPickerModal();">今日に戻る</button>
     </div>
 </div>
 
@@ -507,6 +544,41 @@ let jobs = JSON.parse(localStorage.getItem('adv_jobs')) || [
 
 let appSettings = JSON.parse(localStorage.getItem('adv_appSettings')) || { theme: 'default', font: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif" };
 
+// ★ 30種類の配色データ（Colorhuntから厳選）
+const colorThemes = {
+    'default': { bg1: '#F3E4C9', bg2: '#D3D4C0', txtMain: '#0A2947', txtSub: '#8B5E3C' },
+    'ch1': { bg1: '#FDF6F0', bg2: '#F8E2CF', txtMain: '#7B506F', txtSub: '#955D5D' },
+    'ch2': { bg1: '#222831', bg2: '#393E46', txtMain: '#EEEEEE', txtSub: '#00ADB5' },
+    'ch3': { bg1: '#E9EFEC', bg2: '#C4DAD2', txtMain: '#16423C', txtSub: '#6A9C89' },
+    'ch4': { bg1: '#F3E9DD', bg2: '#DAB88B', txtMain: '#804674', txtSub: '#A86464' },
+    'ch5': { bg1: '#F4DFBA', bg2: '#EEC373', txtMain: '#874C62', txtSub: '#CA965C' },
+    'ch6': { bg1: '#FFD4B2', bg2: '#FFF6BD', txtMain: '#86C8BC', txtSub: '#CEEDC7' },
+    'ch7': { bg1: '#FAD4D4', bg2: '#EF9F9F', txtMain: '#F47C7C', txtSub: '#FFC8C8' },
+    'ch8': { bg1: '#F9F9F9', bg2: '#E4F9F5', txtMain: '#11999E', txtSub: '#30E3CA' },
+    'ch9': { bg1: '#F8F3D4', bg2: '#F6416C', txtMain: '#00B8A9', txtSub: '#FFDE7D' },
+    'ch10': { bg1: '#FFF3E0', bg2: '#FFE0B2', txtMain: '#E65100', txtSub: '#FF9800' },
+    'ch11': { bg1: '#2B2E4A', bg2: '#E84545', txtMain: '#903749', txtSub: '#53354A' },
+    'ch12': { bg1: '#FFF8EA', bg2: '#9E7676', txtMain: '#594545', txtSub: '#815B5B' },
+    'ch13': { bg1: '#F1F6F9', bg2: '#9BA4B5', txtMain: '#212A3E', txtSub: '#394867' },
+    'ch14': { bg1: '#FFE5F1', bg2: '#FF8AAE', txtMain: '#8C0000', txtSub: '#BD1616' },
+    'ch15': { bg1: '#1A1A2E', bg2: '#16213E', txtMain: '#E94560', txtSub: '#0F3460' },
+    'ch16': { bg1: '#FDFBF7', bg2: '#F3E8E0', txtMain: '#2D4059', txtSub: '#EA5455' },
+    'ch17': { bg1: '#EFEFEF', bg2: '#CCC1FF', txtMain: '#810000', txtSub: '#CE1212' },
+    'ch18': { bg1: '#F4EEFF', bg2: '#DCD6F7', txtMain: '#424874', txtSub: '#A6B1E1' },
+    'ch19': { bg1: '#FFFFD2', bg2: '#FCBAD3', txtMain: '#AA96DA', txtSub: '#A8D8EA' },
+    'ch20': { bg1: '#EEEEEE', bg2: '#CCCCCC', txtMain: '#222831', txtSub: '#393E46' },
+    'ch21': { bg1: '#FEE3EC', bg2: '#F9C5D5', txtMain: '#F999B7', txtSub: '#F2789F' },
+    'ch22': { bg1: '#F1F7B5', bg2: '#A8D1D1', txtMain: '#9EA1D4', txtSub: '#FD8A8A' },
+    'ch23': { bg1: '#F5EEDC', bg2: '#C3B091', txtMain: '#8E806A', txtSub: '#E4C988' },
+    'ch24': { bg1: '#D6E4F0', bg2: '#1E56A0', txtMain: '#163172', txtSub: '#1C658C' },
+    'ch25': { bg1: '#FFF6EA', bg2: '#F4E3CB', txtMain: '#D8B384', txtSub: '#A27B5C' },
+    'ch26': { bg1: '#FFE5E5', bg2: '#FFC4C4', txtMain: '#FF8AAE', txtSub: '#FF9999' },
+    'ch27': { bg1: '#E8F9FD', bg2: '#79DAE8', txtMain: '#0AA1DD', txtSub: '#2155CD' },
+    'ch28': { bg1: '#3F3B6C', bg2: '#624F82', txtMain: '#A3C7D6', txtSub: '#9F73AB' },
+    'ch29': { bg1: '#FFFDEB', bg2: '#F6E7D8', txtMain: '#FF884B', txtSub: '#FFD384' },
+    'ch30': { bg1: '#393E46', bg2: '#222831', txtMain: '#D65A31', txtSub: '#EEEEEE' }
+};
+
 const fixIds = (arr) => {
     let changed = false;
     let seenIds = new Set();
@@ -554,7 +626,7 @@ function switchTab(tab) {
         mainCal.style.display = 'none';
         mainCat.style.display = 'none';
         mainSet.style.display = 'flex';
-        document.getElementById('themeSelect').value = appSettings.theme;
+        document.getElementById('themeSelect').value = appSettings.theme || 'default';
         document.getElementById('fontSelect').value = appSettings.font;
         document.getElementById('navSettings').classList.add('active');
     }
@@ -626,68 +698,28 @@ function changeFont() {
     applySettings();
     saveData();
 }
+
 function applySettings() {
     document.documentElement.style.setProperty('--font-family', appSettings.font);
     const root = document.documentElement;
-    if (appSettings.theme === 'dark') {
-        root.style.setProperty('--ios-bg-start', '#1c1c1e');
-        root.style.setProperty('--ios-bg-end', '#000000');
-        root.style.setProperty('--ios-surface', 'rgba(40, 40, 40, 0.7)');
-        root.style.setProperty('--ios-surface-solid', '#2c2c2e');
-        root.style.setProperty('--ios-text-main', '#ffffff');
-        root.style.setProperty('--ios-text-sub', '#a1a1a6');
-        root.style.setProperty('--ios-accent', '#0a84ff');
-        root.style.setProperty('--ios-danger', '#ff453a');
-        root.style.setProperty('--ios-border', 'rgba(255, 255, 255, 0.1)');
-    } else if (appSettings.theme === 'blue') {
-        root.style.setProperty('--ios-bg-start', '#e0f2fe');
-        root.style.setProperty('--ios-bg-end', '#bae6fd');
-        root.style.setProperty('--ios-surface', 'rgba(255, 255, 255, 0.6)');
-        root.style.setProperty('--ios-surface-solid', 'rgba(255, 255, 255, 0.9)');
-        root.style.setProperty('--ios-text-main', '#0f172a');
-        root.style.setProperty('--ios-text-sub', '#475569');
-        root.style.setProperty('--ios-accent', '#0284c7');
-        root.style.setProperty('--ios-danger', '#e11d48');
-        root.style.setProperty('--ios-border', 'rgba(15, 23, 42, 0.15)');
-    } else if (appSettings.theme === 'colorhunt1') {
-        root.style.setProperty('--ios-bg-start', '#FDF6F0');
-        root.style.setProperty('--ios-bg-end', '#F8E2CF');
-        root.style.setProperty('--ios-surface', 'rgba(255, 255, 255, 0.5)');
-        root.style.setProperty('--ios-surface-solid', 'rgba(255, 255, 255, 0.9)');
-        root.style.setProperty('--ios-text-main', '#7B506F');
-        root.style.setProperty('--ios-text-sub', '#955D5D');
-        root.style.setProperty('--ios-accent', '#E48586');
-        root.style.setProperty('--ios-danger', '#E48586');
-        root.style.setProperty('--ios-border', 'rgba(123, 80, 111, 0.15)');
-    } else if (appSettings.theme === 'colorhunt2') {
-        root.style.setProperty('--ios-bg-start', '#222831');
-        root.style.setProperty('--ios-bg-end', '#393E46');
+    const themeKey = appSettings.theme || 'default';
+    const t = colorThemes[themeKey] || colorThemes['default'];
+
+    root.style.setProperty('--ios-bg-start', t.bg1);
+    root.style.setProperty('--ios-bg-end', t.bg2);
+    root.style.setProperty('--ios-text-main', t.txtMain);
+    root.style.setProperty('--ios-text-sub', t.txtSub);
+    root.style.setProperty('--ios-accent', t.txtMain);
+    root.style.setProperty('--ios-danger', t.txtSub);
+    
+    // 暗い背景の場合は表面色を調整
+    if (t.bg1 === '#222831' || t.bg1 === '#1A1A2E' || t.bg1 === '#2B2E4A' || t.bg1 === '#393E46' || t.bg1 === '#3F3B6C') {
         root.style.setProperty('--ios-surface', 'rgba(34, 40, 49, 0.7)');
-        root.style.setProperty('--ios-surface-solid', '#393E46');
-        root.style.setProperty('--ios-text-main', '#EEEEEE');
-        root.style.setProperty('--ios-text-sub', '#00ADB5');
-        root.style.setProperty('--ios-accent', '#00ADB5');
-        root.style.setProperty('--ios-danger', '#FF2E63');
+        root.style.setProperty('--ios-surface-solid', t.bg2);
         root.style.setProperty('--ios-border', 'rgba(238, 238, 238, 0.1)');
-    } else if (appSettings.theme === 'colorhunt3') {
-        root.style.setProperty('--ios-bg-start', '#E9EFEC');
-        root.style.setProperty('--ios-bg-end', '#C4DAD2');
-        root.style.setProperty('--ios-surface', 'rgba(255, 255, 255, 0.55)');
-        root.style.setProperty('--ios-surface-solid', 'rgba(255, 255, 255, 0.9)');
-        root.style.setProperty('--ios-text-main', '#16423C');
-        root.style.setProperty('--ios-text-sub', '#6A9C89');
-        root.style.setProperty('--ios-accent', '#16423C');
-        root.style.setProperty('--ios-danger', '#D95F5F');
-        root.style.setProperty('--ios-border', 'rgba(22, 66, 60, 0.15)');
     } else {
-        root.style.setProperty('--ios-bg-start', '#F3E4C9');
-        root.style.setProperty('--ios-bg-end', '#D3D4C0');
         root.style.setProperty('--ios-surface', 'rgba(255, 255, 255, 0.55)');
         root.style.setProperty('--ios-surface-solid', 'rgba(255, 255, 255, 0.9)');
-        root.style.setProperty('--ios-text-main', '#0A2947');
-        root.style.setProperty('--ios-text-sub', '#8B5E3C');
-        root.style.setProperty('--ios-accent', '#0A2947');
-        root.style.setProperty('--ios-danger', '#8B5E3C');
         root.style.setProperty('--ios-border', 'rgba(10, 41, 71, 0.15)');
     }
 }
