@@ -184,7 +184,7 @@
             }
             
             .mobile-toggle-btn {
-                display: block; /* スマホでボタンを表示 */
+                display: block;
             }
 
             .main-content {
@@ -201,23 +201,39 @@
                 border-bottom: 1px solid var(--ios-border);
                 box-shadow: none;
                 height: auto;
-                display: none; /* 初期状態では隠す */
+                display: none;
             }
 
             .sidebar.mobile-visible {
-                display: flex; /* トグルボタンで表示された時 */
+                display: flex;
             }
 
             .salary-dashboard { padding: 15px; }
             .day-details { max-height: 400px; border-top: 1px dashed rgba(10, 41, 71, 0.2); }
-            .calendar-header { padding: 20px 15px 10px; }
-            .calendar-header h2 { font-size: 1.6em; }
-            .calendar-header button { width: 36px; height: 36px; }
-            .calendar { padding: 0 10px 15px; }
-            .days { gap: 5px; }
-            .day { padding: 5px; }
-            .day-number { font-size: 0.9em; margin-bottom: 2px; }
-            .event-label { font-size: 0.65em; padding: 2px 4px; }
+            
+            /* スマホカレンダーのグリッド化（添付画像のようなUI） */
+            .calendar-header { padding: 15px 10px 5px; }
+            .calendar-header h2 { font-size: 1.4em; }
+            .calendar-header button { width: 32px; height: 32px; font-size: 0.9em; }
+            .calendar { padding: 0; }
+            .weekdays { margin-bottom: 0; padding: 5px 0; font-size: 0.75em; border-bottom: 1px solid var(--ios-border); }
+            .days { gap: 0; border-left: 1px solid var(--ios-border); border-top: none; }
+            .day { 
+                padding: 2px; 
+                border-radius: 0; 
+                border: none; 
+                border-right: 1px solid var(--ios-border); 
+                border-bottom: 1px solid var(--ios-border); 
+                box-shadow: none; 
+                min-height: 70px;
+            }
+            .day:hover { transform: none; box-shadow: none; }
+            .day.today { border: none; border-right: 1px solid var(--ios-border); border-bottom: 1px solid var(--ios-border); background: rgba(255,255,255,0.8); }
+            .day.today .day-number { width: 22px; height: 22px; font-size: 0.9em; margin: 0 auto 2px; }
+            .day-number { font-size: 0.8em; margin-bottom: 2px; align-self: center; } /* 添付画像のように中央寄せ */
+            .events-container { gap: 1px; }
+            .event-label { font-size: 0.65em; padding: 2px 3px; border-radius: 2px; text-align: left; }
+
             .copy-banner { flex-direction: column; text-align: center; gap: 12px; padding: 15px; }
             .modal-content { width: 95%; padding: 20px; }
         }
@@ -427,7 +443,6 @@ function saveData() {
     localStorage.setItem('adv_jobs', JSON.stringify(jobs));
 
     if (GAS_URL) {
-        // ★修正: text/plain形式で送信する（CORSエラーを回避し、GAS側で安全に受け取るため）
         fetch(GAS_URL, {
             method: 'POST',
             mode: 'no-cors',
@@ -477,7 +492,7 @@ function renderCalendar() {
     const today = new Date();
 
     for (let i = 0; i < firstDay; i++) {
-        calendarDays.innerHTML += `<div class="day" style="background-color: transparent; pointer-events: none;"></div>`;
+        calendarDays.innerHTML += `<div class="day" style="background-color: transparent; pointer-events: none; border: none;"></div>`;
     }
 
     for (let i = 1; i <= daysInMonth; i++) {
@@ -498,7 +513,8 @@ function renderCalendar() {
         dayEvents.sort((a, b) => a.time.localeCompare(b.time)).forEach(event => {
             const cat = categories.find(c => c.name === event.category);
             const color = cat ? cat.color : '#0A2947';
-            eventHtml += `<div class="event-label" style="background-color: ${color};" onclick="event.stopPropagation(); selectDate('${dateStr}');">${event.time} ${event.title}</div>`;
+            // ★ 時間の表示を消し、クリック時に直接編集モーダルが開くよう変更しました
+            eventHtml += `<div class="event-label" style="background-color: ${color};" onclick="event.stopPropagation(); editSchedule('${event.id}');">${event.title}</div>`;
         });
 
         calendarDays.innerHTML += `
