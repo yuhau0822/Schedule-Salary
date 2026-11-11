@@ -63,14 +63,18 @@ function saveData() {
 
     // GAS URLがあれば非同期で送信
     if (GAS_URL) {
+        // ★修正: ブラウザのセキュリティに弾かれない形式(フォームデータ)で送信する
         fetch(GAS_URL, {
             method: 'POST',
-            mode: 'no-cors', // CORSエラー回避
-            headers: { 'Content-Type': 'text/plain' },
-            body: JSON.stringify({ schedules, categories, jobs })
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'data=' + encodeURIComponent(JSON.stringify({ schedules, categories, jobs }))
         }).catch(e => console.log("GASへの保存エラー:", e));
     }
 }
+
 
 
 let currentDate = new Date();

@@ -538,18 +538,28 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; bo
 ================================ */
 @media screen and (max-width: 768px) {
     .app-container {
+        display: flex;
         flex-direction: column; /* 横並びから縦並びに変更 */
         height: auto;
         min-height: 100vh;
         overflow-y: auto;
     }
     
+    /* ▼ カレンダーを一番上に配置 ▼ */
+    .main-content {
+        order: 1; 
+        height: auto;
+        overflow: visible;
+        min-height: 500px;
+    }
+    
+    /* ▼ 給与・予定一覧を下に配置 ▼ */
     .sidebar {
+        order: 2; 
         width: 100%;
         border-right: none;
         border-bottom: 1px solid var(--ios-border);
         box-shadow: none;
-        /* スマホ時はサイドバーの高さを制限せず自然に表示 */
         height: auto;
     }
 
@@ -558,14 +568,8 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; bo
     }
     
     .day-details {
-        max-height: 350px;
+        max-height: 400px;
         border-top: 1px dashed rgba(10, 41, 71, 0.2);
-    }
-    
-    .main-content {
-        height: auto;
-        overflow: visible;
-        min-height: 500px;
     }
     
     .calendar-header {
