@@ -105,7 +105,8 @@
         .calendar { flex-grow: 1; display: flex; flex-direction: column; padding: 0 40px 40px; }
         .weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; color: var(--ios-text-sub); font-weight: 700; margin-bottom: 10px; font-size: 0.85em; letter-spacing: 1px; }
         .sun { color: var(--ios-danger); }
-        .sat { color: var(--ios-accent); }
+        /* SATの文字色を他の平日(text-sub)と揃える */
+        .sat { color: var(--ios-text-sub); } 
         .days { flex-grow: 1; display: grid; grid-template-columns: repeat(7, 1fr); grid-auto-rows: 1fr; gap: 10px; }
         .day { background: var(--ios-surface-solid); border-radius: var(--ios-radius-md); padding: 10px; display: flex; flex-direction: column; cursor: pointer; transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1); position: relative; overflow: hidden; box-shadow: 0 2px 8px rgba(10,41,71,0.03); border: 2px solid transparent; }
         .day:hover { transform: scale(1.03); box-shadow: 0 8px 20px rgba(10,41,71,0.08); }
@@ -114,17 +115,18 @@
         .day.multi-selected { background: rgba(10, 41, 71, 0.08); border: 2px solid var(--ios-accent); }
         .day-number { margin-bottom: 8px; font-weight: 700; font-size: 1.05em; align-self: flex-start; pointer-events: none; }
         .day-number.sunday, .day-number.holiday { color: var(--ios-danger); } 
-        .day-number.saturday { color: var(--ios-accent); } 
+        /* SATの数字の色を他の平日(text-main)と揃える */
+        .day-number.saturday { color: var(--ios-text-main); } 
         .day-number.normal { color: var(--ios-text-main); } 
         .events-container { flex-grow: 1; overflow-y: auto; pointer-events: none; display: flex; flex-direction: column; gap: 4px; }
         .event-label { font-size: 0.75em; padding: 4px 8px; border-radius: 6px; color: white; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: auto; box-shadow: 0 1px 4px rgba(10,41,71,0.15); transition: opacity 0.2s; }
         .event-label:hover { opacity: 0.8; }
 
-        /* モーダル背景（スマホでもタップ可能にするため cursor: pointer） */
+        /* モーダル背景 */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 41, 71, 0.3); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 100; justify-content: center; align-items: center; cursor: pointer; }
         .modal[style*="display: flex"] .modal-content { animation: iosScaleUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes iosScaleUp { 0% { transform: scale(0.9) translateY(20px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
-        /* モーダルの中身はクリック時の挙動をリセット */
+        /* モーダルの中身 */
         .modal-content { cursor: default; background: rgba(243, 228, 201, 0.9); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); padding: 35px; border-radius: var(--ios-radius-lg); width: 90%; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: var(--ios-shadow); border: 1px solid rgba(255,255,255,0.6); }
         .schedule-modal-content { max-width: 420px; }
         .settings-modal-content { max-width: 500px; }
@@ -134,10 +136,13 @@
         
         .form-group { display: flex; flex-direction: column; gap: 18px; }
         .form-group label { font-size: 0.85em; color: var(--ios-text-sub); margin-bottom: -12px; font-weight: 700;}
-        .time-inputs { display: flex; align-items: center; gap: 10px; width: 100%; }
-        .form-group input, .form-group select { padding: 14px 15px; border: 1px solid var(--ios-border); border-radius: var(--ios-radius-md); background: var(--ios-surface-solid); font-family: inherit; width: 100%; font-size: 1.05em; color: var(--ios-text-main); transition: border-color 0.2s, box-shadow 0.2s; }
+        .time-inputs { display: flex; flex-direction: row; align-items: center; gap: 10px; width: 100%; }
+        .time-inputs input { flex: 1; min-width: 0; }
+        .time-inputs span { font-weight: bold; color: var(--ios-text-sub); }
+        
+        .form-group input, .form-group select { padding: 14px 15px; border: 1px solid var(--ios-border); border-radius: var(--ios-radius-md); background: var(--ios-surface-solid); font-family: inherit; width: 100%; font-size: 1.05em; color: var(--ios-text-main); transition: border-color 0.2s, box-shadow 0.2s; box-sizing: border-box; }
         .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--ios-accent); box-shadow: 0 0 0 4px rgba(10, 41, 71, 0.15); }
-        .submit-btn { padding: 16px; background-color: var(--ios-accent); color: white; border: none; border-radius: var(--ios-radius-md); cursor: pointer; font-weight: 700; font-size: 1.1em; margin-top: 10px; transition: background 0.2s, transform 0.1s; }
+        .submit-btn { padding: 16px; background-color: var(--ios-accent); color: white; border: none; border-radius: var(--ios-radius-md); cursor: pointer; font-weight: 700; font-size: 1.1em; margin-top: 10px; transition: background 0.2s, transform 0.1s; width: 100%; }
         .submit-btn:hover { background-color: var(--ios-accent-hover); }
         .submit-btn:active { transform: scale(0.97); }
         
@@ -176,10 +181,7 @@
         input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
         input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(10,41,71,0.15); }
 
-        /* スマホ用ボトムナビゲーション */
-        .bottom-nav {
-            display: none;
-        }
+        .bottom-nav { display: none; }
 
         /* ================================
            ★ スマホ用レスポンシブ対応
@@ -190,26 +192,30 @@
                 height: 100vh;
             }
             
+            /* ボトムナビの配色をテーマに合わせる */
             .bottom-nav {
                 display: flex;
                 justify-content: space-around;
                 align-items: center;
-                background: #1a1a1a;
+                background: var(--ios-surface-solid);
+                backdrop-filter: var(--ios-blur);
+                -webkit-backdrop-filter: var(--ios-blur);
                 padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
-                border-radius: 40px;
+                border-radius: 30px;
                 margin: 0 15px 15px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                box-shadow: var(--ios-shadow);
                 position: fixed;
                 bottom: 0;
                 left: 0;
                 right: 0;
                 z-index: 50;
+                border: 1px solid var(--ios-border);
             }
             .nav-item {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                color: #888;
+                color: var(--ios-text-sub);
                 font-size: 0.7em;
                 font-weight: 600;
                 cursor: pointer;
@@ -217,7 +223,7 @@
                 transition: color 0.2s;
             }
             .nav-item.active {
-                color: #2ecc71; 
+                color: var(--ios-accent); 
             }
             .nav-item svg {
                 width: 24px;
@@ -239,15 +245,10 @@
                 padding-bottom: 100px;
             }
 
-            .sidebar.mobile-active {
-                display: flex;
-            }
-            .main-content.mobile-hidden {
-                display: none;
-            }
+            .sidebar.mobile-active { display: flex; }
+            .main-content.mobile-hidden { display: none; }
 
             .salary-dashboard { padding: 15px; border-bottom: none;}
-            
             .calendar-header { padding: 15px 15px 10px; }
             .calendar-header button { width: 32px; height: 32px; font-size: 0.9em; }
             
@@ -255,19 +256,19 @@
             .search-results { left: 15px; right: 15px; }
 
             .calendar { padding: 0; }
-            .weekdays { margin-bottom: 0; padding: 5px 0; font-size: 0.75em; border-bottom: 1px solid var(--ios-border); }
-            .days { gap: 0; border-left: 1px solid var(--ios-border); border-top: none; }
+            /* カレンダーの線を消す */
+            .weekdays { margin-bottom: 0; padding: 5px 0; font-size: 0.75em; border-bottom: none; }
+            .days { gap: 0; border-left: none; border-top: none; }
             .day { 
                 padding: 2px; 
-                border-radius: 0; 
-                border: none; 
-                border-right: 1px solid var(--ios-border); 
-                border-bottom: 1px solid var(--ios-border); 
+                border-radius: var(--ios-radius-md); 
+                border: none !important; 
                 box-shadow: none; 
                 min-height: 70px;
+                background: transparent;
             }
             .day:hover { transform: none; box-shadow: none; }
-            .day.today { border: none; border-right: 1px solid var(--ios-border); border-bottom: 1px solid var(--ios-border); background: rgba(255,255,255,0.8); }
+            .day.today { border: none !important; background: rgba(255,255,255,0.4); }
             .day.today .day-number { width: 22px; height: 22px; font-size: 0.9em; margin: 0 auto 2px; }
             .day-number { font-size: 0.8em; margin-bottom: 2px; align-self: center; } 
             .events-container { gap: 1px; }
@@ -275,29 +276,27 @@
 
             .copy-banner { flex-direction: column; text-align: center; gap: 12px; padding: 15px; }
             .modal-content { width: 95%; padding: 20px; }
-
-            /* スマホ横長崩れ防止 */
-            .time-inputs { flex-direction: column; align-items: stretch; gap: 8px; }
-            .time-inputs span { display: none; }
+            
             .flex-row { flex-direction: column; gap: 8px; }
         }
     </style>
 </head>
 <body>
 
+<!-- 予定読み込み中の表示 -->
+<div id="loadingOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--ios-bg-start); z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 15px;">
+    <div style="font-size: 1.6em; font-weight: bold; color: var(--ios-text-main); letter-spacing: 1px;">予定読み込み中…</div>
+</div>
+
 <div class="app-container">
-    <!-- 左サイドバー -->
     <aside class="sidebar" id="sidebar">
         <h1 class="app-title">Schedule & Salary</h1>
-        
         <div class="salary-dashboard">
             <div class="salary-row">
                 <span class="salary-label">今月の推定給与</span>
                 <div class="salary-amount">¥ <span id="monthlySalary">0</span></div>
             </div>
-            
             <ul id="jobSalaryBreakdown" class="job-salary-breakdown"></ul>
-
             <div class="salary-row sub-salary">
                 <span class="salary-label">今年の累計収入</span>
                 <div class="salary-sub-amount">¥ <span id="annualSalary">0</span></div>
@@ -311,19 +310,14 @@
         </div>
     </aside>
 
-    <!-- メインコンテンツ -->
     <main class="main-content" id="mainContent">
         <div class="calendar-header">
             <button onclick="prevMonth()">◀</button>
-            <!-- PC版バグ対策: 透明な input type="month" をテキストの上に被せる -->
-            <div style="position: relative; display: inline-block; cursor: pointer;">
-                <div id="monthYearDisplay" style="font-size: 1.8em; font-weight: 700; color: var(--ios-text-main); letter-spacing: -0.5px; pointer-events: none;"></div>
-                <input type="month" id="monthYearPicker" onchange="jumpToMonth()" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;">
-            </div>
+            <!-- PC版でもクリックで確実に入力・変更できるモーダル方式に変更 -->
+            <div id="monthYearDisplay" style="font-size: 1.8em; font-weight: 700; color: var(--ios-text-main); letter-spacing: -0.5px; cursor: pointer; transition: opacity 0.2s;" onclick="openMonthPickerModal()" onmouseover="this.style.opacity=0.7" onmouseout="this.style.opacity=1"></div>
             <button onclick="nextMonth()">▶</button>
         </div>
 
-        <!-- 予定検索バー -->
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="予定を検索..." oninput="searchSchedules()" onblur="hideSearchResultsDelayed()" onfocus="searchSchedules()">
             <div id="searchResults" class="search-results"></div>
@@ -352,13 +346,7 @@
             <span>予定</span>
         </div>
         <div class="nav-item" id="navSalary" onclick="switchMobileTab('salary')">
-            <!-- 給与アイコンを￥(円)マークに変更 -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 12V22"></path>
-                <path d="M8 12H16"></path>
-                <path d="M8 16H16"></path>
-                <path d="M7 4L12 12L17 4"></path>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12V22"></path><path d="M8 12H16"></path><path d="M8 16H16"></path><path d="M7 4L12 12L17 4"></path></svg>
             <span>給与確認</span>
         </div>
         <div class="nav-item" onclick="toggleSettingsModal()">
@@ -372,7 +360,26 @@
     </nav>
 </div>
 
-<!-- モーダル群 (背景クリックで確実に閉じるよう onclick を直接指定) -->
+<!-- 年月指定用モーダル（PCでも確実に入力させる用） -->
+<div id="monthPickerModal" class="modal" onclick="if(event.target === this) closeMonthPickerModal()">
+    <div class="modal-content" style="max-width: 320px; padding: 25px;">
+        <span class="close-btn" onclick="closeMonthPickerModal()">&times;</span>
+        <h2 style="font-size: 1.3em;">年月を指定して移動</h2>
+        <div class="form-group" style="flex-direction: row; gap: 15px; justify-content: center; align-items: center;">
+            <input type="number" id="pickerYear" style="width: 100px; text-align: center; padding: 12px;"> 
+            <span style="font-weight: bold; color: var(--ios-text-sub);">年</span>
+            <select id="pickerMonth" style="width: 80px; padding: 12px; text-align: center;">
+                <option value="0">1</option><option value="1">2</option><option value="2">3</option>
+                <option value="3">4</option><option value="4">5</option><option value="5">6</option>
+                <option value="6">7</option><option value="7">8</option><option value="8">9</option>
+                <option value="9">10</option><option value="10">11</option><option value="11">12</option>
+            </select>
+            <span style="font-weight: bold; color: var(--ios-text-sub);">月</span>
+        </div>
+        <button class="submit-btn" onclick="applyMonthPicker()" style="margin-top: 20px;">移動する</button>
+    </div>
+</div>
+
 <div id="dayListModal" class="modal" onclick="if(event.target === this) closeDayListModal()">
     <div class="modal-content day-list-modal-content">
         <div class="day-list-header">
@@ -411,8 +418,8 @@
             <select id="categoryInput"></select>
             
             <div id="editActions" style="display: none; justify-content: space-between; margin-top: 10px;">
-                <button class="action-btn" type="button" style="padding: 10px 15px; border-radius: 8px;" onclick="startCopyModeFromEdit()">この予定をコピー</button>
-                <button class="action-btn" type="button" style="padding: 10px 15px; border-radius: 8px; color:red; border-color:red;" onclick="deleteScheduleFromEdit()">削除</button>
+                <button class="action-btn" type="button" style="padding: 10px 15px; border-radius: 8px; flex: 1; margin-right: 10px;" onclick="startCopyModeFromEdit()">この予定をコピー</button>
+                <button class="action-btn" type="button" style="padding: 10px 15px; border-radius: 8px; color:red; border:color:red; flex: 1;" onclick="deleteScheduleFromEdit()">削除</button>
             </div>
             
             <button class="submit-btn" id="submitBtn" onclick="addOrUpdateSchedule()">予定を登録</button>
@@ -462,7 +469,6 @@
     </div>
 </div>
 
-<!-- アプリ設定モーダル -->
 <div id="generalSettingsModal" class="modal" onclick="if(event.target === this) closeGeneralSettingsModal()">
     <div class="modal-content settings-modal-content">
         <span class="close-btn" onclick="closeGeneralSettingsModal()">&times;</span>
@@ -516,8 +522,6 @@ if (fixIds(schedules)) localStorage.setItem('adv_schedules', JSON.stringify(sche
 if (fixIds(categories)) localStorage.setItem('adv_categories', JSON.stringify(categories));
 if (fixIds(jobs)) localStorage.setItem('adv_jobs', JSON.stringify(jobs));
 
-// ▼ 古いwindowのclickイベントリスナーは削除しました（各モーダルのonclickで処理するため）
-
 function switchMobileTab(tab) {
     const sidebar = document.getElementById('sidebar');
     const main = document.getElementById('mainContent');
@@ -537,7 +541,6 @@ function switchMobileTab(tab) {
     }
 }
 
-// 予定検索機能
 function searchSchedules() {
     const query = document.getElementById('searchInput').value.toLowerCase();
     const resultsContainer = document.getElementById('searchResults');
@@ -557,7 +560,6 @@ function searchSchedules() {
     if (filtered.length === 0) {
         resultsContainer.innerHTML = '<div class="search-result-item" style="color: #8B5E3C;">見つかりませんでした</div>';
     } else {
-        // 日付順にソート（最新が上）
         filtered.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(s => {
             const dateObj = new Date(s.date);
             const dateStr = `${dateObj.getFullYear()}/${dateObj.getMonth()+1}/${dateObj.getDate()}`;
@@ -573,12 +575,10 @@ function searchSchedules() {
 }
 
 function hideSearchResultsDelayed() {
-    // クリックイベントが発火する前に消えないよう遅延させる
     setTimeout(() => {
         document.getElementById('searchResults').style.display = 'none';
     }, 200);
 }
-
 
 let touchStartX = 0;
 let touchEndX = 0;
@@ -649,7 +649,10 @@ function applySettings() {
 }
 
 async function loadDataFromGAS() {
-    if (!GAS_URL) return;
+    if (!GAS_URL) {
+        document.getElementById('loadingOverlay').style.display = 'none';
+        return;
+    }
     try {
         const res = await fetch(GAS_URL);
         const data = await res.json();
@@ -664,6 +667,9 @@ async function loadDataFromGAS() {
         }
     } catch (e) {
         console.log("GASからの読み込みに失敗、ローカルデータを使用します", e);
+    } finally {
+        // 成功・失敗に関わらず読み込み中画面を非表示
+        document.getElementById('loadingOverlay').style.display = 'none';
     }
 }
 
@@ -707,20 +713,34 @@ function init() {
     fetchHolidays();
 }
 
+// PC版用の年月選択モーダル処理
+function openMonthPickerModal() {
+    document.getElementById('pickerYear').value = currentDate.getFullYear();
+    document.getElementById('pickerMonth').value = currentDate.getMonth();
+    document.getElementById('monthPickerModal').style.display = 'flex';
+}
+
+function closeMonthPickerModal() {
+    document.getElementById('monthPickerModal').style.display = 'none';
+}
+
+function applyMonthPicker() {
+    const y = document.getElementById('pickerYear').value;
+    const m = document.getElementById('pickerMonth').value;
+    if (y && m !== "") {
+        currentDate = new Date(y, m, 1);
+        renderCalendar();
+    }
+    closeMonthPickerModal();
+}
+
 function renderCalendar() {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     
-    // 年月表示テキストを更新
     const displayEl = document.getElementById('monthYearDisplay');
     if (displayEl) {
         displayEl.innerText = `${year}年 ${month + 1}月`;
-    }
-    
-    // 隠れている input type="month" の値を更新
-    const picker = document.getElementById('monthYearPicker');
-    if (picker) {
-        picker.value = `${year}-${String(month + 1).padStart(2, '0')}`;
     }
     
     const firstDay = new Date(year, month, 1).getDay();
@@ -768,16 +788,6 @@ function renderCalendar() {
 
 function prevMonth() { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); }
 function nextMonth() { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); }
-
-// 年月ピッカー変更時の処理
-function jumpToMonth() {
-    const val = document.getElementById('monthYearPicker').value;
-    if (val) {
-        const [y, m] = val.split('-');
-        currentDate = new Date(y, parseInt(m) - 1, 1);
-        renderCalendar();
-    }
-}
 
 function handleDayClick(dateStr) {
     if (isCopyMode) {
