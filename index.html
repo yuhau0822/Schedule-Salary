@@ -6,26 +6,24 @@
     <title>Schedule & Salary</title>
     <style>
         /* ================================
-           iOS 27風 Liquid Glass (グラスモーフィズム)
+           iOS風 モダンデザイン 
         ================================ */
         :root {
-            --ios-bg-start: #EAE6DF;
-            --ios-bg-end: #D0C9B6;
-            --glass-bg: rgba(255, 255, 255, 0.35);
-            --glass-bg-solid: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --glass-shadow: 0 8px 32px rgba(10, 41, 71, 0.08);
-            --glass-inset: inset 0 1px 2px rgba(255, 255, 255, 0.8);
-            --ios-text-main: #1C1C1E; 
-            --ios-text-sub: #5C5C60; 
-            --ios-accent: #007AFF; 
-            --ios-accent-hover: #005bb5;
-            --ios-danger: #FF3B30; 
-            --ios-border: rgba(0, 0, 0, 0.08); 
-            --ios-radius-lg: 28px;
-            --ios-radius-md: 18px;
-            --ios-radius-sm: 12px;
+            --ios-bg-start: #F3E4C9;
+            --ios-bg-end: #D3D4C0;
+            --ios-surface: rgba(255, 255, 255, 0.55); 
+            --ios-surface-solid: rgba(255, 255, 255, 0.9); 
+            --ios-text-main: #0A2947; 
+            --ios-text-sub: #8B5E3C; 
+            --ios-accent: #0A2947; 
+            --ios-accent-hover: #163e66;
+            --ios-danger: #8B5E3C; 
+            --ios-border: rgba(10, 41, 71, 0.15); 
+            --ios-radius-lg: 24px;
+            --ios-radius-md: 14px;
+            --ios-radius-sm: 8px;
             --ios-blur: blur(30px);
+            --ios-shadow: 0 10px 40px rgba(10, 41, 71, 0.08); 
             --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
         }
 
@@ -47,13 +45,12 @@
             width: 100vw; 
         }
 
-        /* サイドバー (Liquid Glass) */
         .sidebar { 
             width: 380px; 
-            background: var(--glass-bg);
+            background: var(--ios-surface);
             backdrop-filter: var(--ios-blur);
             -webkit-backdrop-filter: var(--ios-blur);
-            border-right: 1px solid var(--glass-border); 
+            border-right: 1px solid var(--ios-border); 
             display: flex; 
             flex-direction: column; 
             z-index: 10; 
@@ -73,126 +70,74 @@
             border-bottom: 1px solid var(--ios-border);
         }
 
-        .salary-dashboard { padding: 20px; background: transparent; }
-        
-        .salary-row { 
-            margin-bottom: 15px; text-align: center; 
-            background: var(--glass-bg-solid); 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 18px; 
-            border-radius: var(--ios-radius-md); 
-            box-shadow: var(--glass-shadow); 
-            border: 1px solid var(--glass-border);
-        }
-        .job-salary-breakdown { list-style: none; padding: 0; margin: 0 0 15px 0; font-size: 0.9em; }
-        .job-salary-breakdown li { display: flex; justify-content: space-between; padding: 10px 15px; background: var(--glass-bg-solid); border: 1px solid var(--glass-border); border-radius: var(--ios-radius-sm); margin-bottom: 8px; color: var(--ios-text-main); font-weight: 600; box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
-        
-        .sub-salary { display: flex; justify-content: space-between; align-items: center; padding: 15px; margin-bottom: 10px; }
+        .salary-dashboard { padding: 20px; background: transparent; border-bottom: 1px solid var(--ios-border); }
+        .salary-row { margin-bottom: 12px; text-align: center; background: var(--ios-surface-solid); padding: 15px; border-radius: var(--ios-radius-md); box-shadow: 0 2px 12px rgba(10,41,71,0.04); }
+        .job-salary-breakdown { list-style: none; padding: 0; margin: 0 0 12px 0; font-size: 0.85em; }
+        .job-salary-breakdown li { display: flex; justify-content: space-between; padding: 6px 12px; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(10, 41, 71, 0.08); border-radius: var(--ios-radius-sm); margin-bottom: 5px; color: var(--ios-text-main); font-weight: 600; }
+        .sub-salary { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; margin-bottom: 8px; box-shadow: none; border: 1px solid var(--ios-border); background: var(--ios-surface-solid); border-radius: var(--ios-radius-md); }
         .salary-label { font-size: 0.85em; color: var(--ios-text-sub); font-weight: 600; }
         .salary-amount { font-size: 2.2em; font-weight: 700; color: var(--ios-text-main); margin-top: 5px; letter-spacing: -0.5px; }
         .salary-sub-amount { font-size: 1.1em; font-weight: 600; color: var(--ios-text-main); }
         .highlight .salary-sub-amount { color: var(--ios-danger); }
-        
-        .settings-btn { 
-            background: var(--glass-bg-solid); color: var(--ios-accent); 
-            border: 1px solid var(--glass-border); border-radius: var(--ios-radius-md); 
-            padding: 12px; cursor: pointer; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); 
-            width: 100%; margin-top: 10px; font-weight: 600; font-size: 0.95em; 
-            box-shadow: var(--glass-shadow);
-        }
+        .settings-btn { background: var(--ios-surface-solid); color: var(--ios-accent); border: 1px solid var(--ios-border); border-radius: var(--ios-radius-md); padding: 10px; cursor: pointer; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); width: 100%; margin-top: 10px; font-weight: 600; font-size: 0.9em; }
         .settings-btn:hover { background: var(--ios-accent); color: white; border-color: var(--ios-accent); }
 
         .main-content { flex-grow: 1; display: flex; flex-direction: column; background: transparent; position: relative; overflow-y: auto;}
-        
-        .copy-banner { background: rgba(0, 122, 255, 0.85); backdrop-filter: var(--ios-blur); -webkit-backdrop-filter: var(--ios-blur); color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 0.95em; font-weight: 600; z-index: 5; }
-        .copy-banner button { background: white; color: var(--ios-accent); border: none; padding: 8px 16px; border-radius: var(--ios-radius-sm); cursor: pointer; font-weight: 700; transition: opacity 0.2s; }
+        .copy-banner { background: rgba(10, 41, 71, 0.85); backdrop-filter: var(--ios-blur); -webkit-backdrop-filter: var(--ios-blur); color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 0.95em; font-weight: 600; z-index: 5; }
+        .copy-banner button { background: var(--ios-danger); color: white; border: none; padding: 8px 16px; border-radius: var(--ios-radius-sm); cursor: pointer; font-weight: 600; transition: opacity 0.2s; }
         .copy-banner button:hover { opacity: 0.8; }
         
         .calendar-header { display: flex; justify-content: space-between; align-items: center; padding: 25px 40px 15px; }
-        
-        /* 年月入力 (PC版バグ修正) */
-        .calendar-header input[type="month"] { 
-            font-size: 1.5em; color: var(--ios-text-main); font-weight: 700; letter-spacing: -0.5px; 
-            background: var(--glass-bg-solid); 
-            border: 1px solid var(--glass-border); 
-            padding: 8px 16px;
-            border-radius: var(--ios-radius-sm);
-            outline: none; font-family: inherit; cursor: pointer;
-            box-shadow: var(--glass-shadow);
-            transition: all 0.2s;
-        }
-        .calendar-header input[type="month"]:focus {
-            border-color: var(--ios-accent);
-            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
-        }
-
-        .calendar-header button { background: var(--glass-bg-solid); border: 1px solid var(--glass-border); border-radius: 50%; width: 44px; height: 44px; font-size: 1.2em; color: var(--ios-text-main); cursor: pointer; box-shadow: var(--glass-shadow); transition: all 0.2s ease; display: flex; justify-content: center; align-items: center; }
-        .calendar-header button:hover { background: white; transform: scale(1.05);}
+        .calendar-header button { background: var(--ios-surface-solid); border: 1px solid var(--ios-border); border-radius: 50%; width: 44px; height: 44px; font-size: 1.2em; color: var(--ios-text-main); cursor: pointer; box-shadow: 0 2px 8px rgba(10,41,71,0.04); transition: all 0.2s ease; display: flex; justify-content: center; align-items: center; }
+        .calendar-header button:hover { background: #D3D4C0; transform: scale(1.05);}
         
         /* 検索バー */
         .search-container { padding: 0 40px 10px; position: relative; }
-        .search-container input { width: 100%; padding: 14px 20px; border-radius: var(--ios-radius-md); border: 1px solid var(--glass-border); background: var(--glass-bg-solid); color: var(--ios-text-main); font-size: 1em; outline: none; box-shadow: var(--glass-inset), var(--glass-shadow); backdrop-filter: blur(10px); }
-        .search-container input:focus { border-color: var(--ios-accent); box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2); }
-        .search-results { position: absolute; top: 100%; left: 40px; right: 40px; background: var(--glass-bg-solid); backdrop-filter: var(--ios-blur); border: 1px solid var(--glass-border); border-radius: var(--ios-radius-md); max-height: 250px; overflow-y: auto; z-index: 20; box-shadow: var(--glass-shadow); display: none; }
+        .search-container input { width: 100%; padding: 12px 15px; border-radius: var(--ios-radius-md); border: 1px solid var(--ios-border); background: var(--ios-surface-solid); color: var(--ios-text-main); font-size: 1em; outline: none; }
+        .search-container input:focus { border-color: var(--ios-accent); box-shadow: 0 0 0 3px rgba(10, 41, 71, 0.1); }
+        .search-results { position: absolute; top: 100%; left: 40px; right: 40px; background: var(--ios-surface-solid); backdrop-filter: var(--ios-blur); border: 1px solid var(--ios-border); border-radius: var(--ios-radius-md); max-height: 250px; overflow-y: auto; z-index: 20; box-shadow: var(--ios-shadow); display: none; }
         .search-result-item { padding: 12px 15px; border-bottom: 1px solid var(--ios-border); cursor: pointer; font-size: 0.9em; display: flex; flex-direction: column; }
         .search-result-item:last-child { border-bottom: none; }
-        .search-result-item:hover { background: rgba(0, 0, 0, 0.05); }
+        .search-result-item:hover { background: rgba(10, 41, 71, 0.05); }
         .search-result-date { font-size: 0.8em; color: var(--ios-text-sub); font-weight: bold; }
         .search-result-title { font-weight: bold; color: var(--ios-text-main); }
 
         .calendar { flex-grow: 1; display: flex; flex-direction: column; padding: 0 40px 40px; }
-        .weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; color: var(--ios-text-sub); font-weight: 700; margin-bottom: 15px; font-size: 0.85em; letter-spacing: 1px; }
+        .weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; color: var(--ios-text-sub); font-weight: 700; margin-bottom: 10px; font-size: 0.85em; letter-spacing: 1px; }
         .sun { color: var(--ios-danger); }
         .sat { color: var(--ios-accent); }
-        .days { flex-grow: 1; display: grid; grid-template-columns: repeat(7, 1fr); grid-auto-rows: 1fr; gap: 12px; }
-        
-        .day { 
-            background: var(--glass-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border); border-radius: var(--ios-radius-md); 
-            padding: 10px; display: flex; flex-direction: column; cursor: pointer; 
-            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1); position: relative; overflow: hidden; 
-            box-shadow: var(--glass-shadow);
-        }
-        .day:hover { transform: scale(1.02); box-shadow: 0 12px 30px rgba(0,0,0,0.1); background: var(--glass-bg-solid); }
-        .day.today { background: rgba(255, 255, 255, 0.8); border: 1px solid var(--ios-accent); box-shadow: 0 4px 12px rgba(0, 122, 255, 0.15); }
+        .days { flex-grow: 1; display: grid; grid-template-columns: repeat(7, 1fr); grid-auto-rows: 1fr; gap: 10px; }
+        .day { background: var(--ios-surface-solid); border-radius: var(--ios-radius-md); padding: 10px; display: flex; flex-direction: column; cursor: pointer; transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1); position: relative; overflow: hidden; box-shadow: 0 2px 8px rgba(10,41,71,0.03); border: 2px solid transparent; }
+        .day:hover { transform: scale(1.03); box-shadow: 0 8px 20px rgba(10,41,71,0.08); }
+        .day.today { background: #FFFFFF; border: 2px solid rgba(10, 41, 71, 0.4); box-shadow: 0 4px 12px rgba(10, 41, 71, 0.1); }
         .day.today .day-number { background: var(--ios-accent); color: white !important; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; }
-        .day.multi-selected { background: rgba(0, 122, 255, 0.1); border: 2px solid var(--ios-accent); }
+        .day.multi-selected { background: rgba(10, 41, 71, 0.08); border: 2px solid var(--ios-accent); }
         .day-number { margin-bottom: 8px; font-weight: 700; font-size: 1.05em; align-self: flex-start; pointer-events: none; }
         .day-number.sunday, .day-number.holiday { color: var(--ios-danger); } 
         .day-number.saturday { color: var(--ios-accent); } 
         .day-number.normal { color: var(--ios-text-main); } 
-        .events-container { flex-grow: 1; overflow-y: auto; pointer-events: none; display: flex; flex-direction: column; gap: 5px; }
-        .event-label { font-size: 0.75em; padding: 5px 8px; border-radius: 6px; color: white; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: opacity 0.2s; text-shadow: 0 1px 2px rgba(0,0,0,0.2);}
+        .events-container { flex-grow: 1; overflow-y: auto; pointer-events: none; display: flex; flex-direction: column; gap: 4px; }
+        .event-label { font-size: 0.75em; padding: 4px 8px; border-radius: 6px; color: white; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: auto; box-shadow: 0 1px 4px rgba(10,41,71,0.15); transition: opacity 0.2s; }
         .event-label:hover { opacity: 0.8; }
 
-        /* モーダル背景 */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.25); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 100; justify-content: center; align-items: center; cursor: pointer; }
+        /* モーダル背景（スマホでもタップ可能にするため cursor: pointer） */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 41, 71, 0.3); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 100; justify-content: center; align-items: center; cursor: pointer; }
         .modal[style*="display: flex"] .modal-content { animation: iosScaleUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes iosScaleUp { 0% { transform: scale(0.9) translateY(20px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
-        
-        /* モーダルコンテンツ (Liquid Glass) */
-        .modal-content { 
-            cursor: default; 
-            background: rgba(255, 255, 255, 0.75); 
-            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); 
-            padding: 35px; border-radius: var(--ios-radius-lg); 
-            width: 90%; position: relative; max-height: 90vh; overflow-y: auto; 
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15); 
-            border: 1px solid rgba(255,255,255,0.8); 
-        }
+        /* モーダルの中身はクリック時の挙動をリセット */
+        .modal-content { cursor: default; background: rgba(243, 228, 201, 0.9); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); padding: 35px; border-radius: var(--ios-radius-lg); width: 90%; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: var(--ios-shadow); border: 1px solid rgba(255,255,255,0.6); }
         .schedule-modal-content { max-width: 420px; }
         .settings-modal-content { max-width: 500px; }
-        .close-btn { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.05); width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.2em; cursor: pointer; color: var(--ios-text-sub); transition: background 0.2s; z-index: 10; border: 1px solid rgba(255,255,255,0.5);}
-        .close-btn:hover { background: rgba(0,0,0,0.1); color: var(--ios-text-main); }
+        .close-btn { position: absolute; top: 20px; right: 20px; background: rgba(10,41,71,0.08); width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.2em; cursor: pointer; color: var(--ios-text-sub); transition: background 0.2s; z-index: 10;}
+        .close-btn:hover { background: rgba(10,41,71,0.15); color: var(--ios-text-main); }
         .modal h2 { margin-top: 0; margin-bottom: 25px; color: var(--ios-text-main); font-weight: 700; text-align: center;}
         
         .form-group { display: flex; flex-direction: column; gap: 18px; }
         .form-group label { font-size: 0.85em; color: var(--ios-text-sub); margin-bottom: -12px; font-weight: 700;}
         .time-inputs { display: flex; align-items: center; gap: 10px; width: 100%; }
-        .form-group input, .form-group select { padding: 14px 15px; border: 1px solid var(--glass-border); border-radius: var(--ios-radius-md); background: rgba(255,255,255,0.6); font-family: inherit; width: 100%; font-size: 1.05em; color: var(--ios-text-main); transition: all 0.2s; box-shadow: var(--glass-inset); }
-        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--ios-accent); box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15); background: #fff;}
-        .submit-btn { padding: 16px; background-color: var(--ios-accent); color: white; border: none; border-radius: var(--ios-radius-md); cursor: pointer; font-weight: 700; font-size: 1.1em; margin-top: 10px; transition: background 0.2s, transform 0.1s; box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);}
+        .form-group input, .form-group select { padding: 14px 15px; border: 1px solid var(--ios-border); border-radius: var(--ios-radius-md); background: var(--ios-surface-solid); font-family: inherit; width: 100%; font-size: 1.05em; color: var(--ios-text-main); transition: border-color 0.2s, box-shadow 0.2s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--ios-accent); box-shadow: 0 0 0 4px rgba(10, 41, 71, 0.15); }
+        .submit-btn { padding: 16px; background-color: var(--ios-accent); color: white; border: none; border-radius: var(--ios-radius-md); cursor: pointer; font-weight: 700; font-size: 1.1em; margin-top: 10px; transition: background 0.2s, transform 0.1s; }
         .submit-btn:hover { background-color: var(--ios-accent-hover); }
         .submit-btn:active { transform: scale(0.97); }
         
@@ -200,12 +145,11 @@
         .day-list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--ios-border); padding-bottom: 15px; }
         .day-list-header h2 { margin: 0; font-size: 1.4em; text-align: left;}
         .header-actions { display: flex; gap: 10px; align-items: center; }
-        .add-schedule-btn { background: var(--glass-bg-solid); border: 1px solid var(--glass-border); width: 36px; height: 36px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5em; font-weight: bold; color: var(--ios-accent); cursor: pointer; transition: all 0.2s; box-shadow: var(--glass-shadow); }
+        .add-schedule-btn { background: var(--ios-surface-solid); border: 1px solid var(--ios-border); width: 36px; height: 36px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5em; font-weight: bold; color: var(--ios-accent); cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .add-schedule-btn:hover { background: var(--ios-accent); color: white; }
-        
         .day-list-items { display: flex; flex-direction: column; gap: 12px; }
-        .day-list-item { display: flex; background: var(--glass-bg-solid); border: 1px solid var(--glass-border); border-radius: var(--ios-radius-md); box-shadow: var(--glass-shadow); overflow: hidden; position: relative; cursor: pointer; transition: transform 0.2s;}
-        .day-list-item:hover { transform: translateY(-2px); background: #fff; }
+        .day-list-item { display: flex; background: var(--ios-surface-solid); border-radius: var(--ios-radius-md); box-shadow: 0 2px 8px rgba(10,41,71,0.04); overflow: hidden; position: relative; cursor: pointer; transition: transform 0.2s;}
+        .day-list-item:hover { transform: translateY(-2px); }
         .day-list-item-color { width: 6px; flex-shrink: 0; }
         .day-list-item-time { padding: 15px 12px; display: flex; flex-direction: column; justify-content: center; min-width: 70px; border-right: 1px solid var(--ios-border); font-weight: 700; color: var(--ios-text-sub); font-size: 0.9em; text-align: center; gap: 4px;}
         .day-list-item-time .end-time { font-size: 0.85em; opacity: 0.7; font-weight: 500;}
@@ -222,40 +166,39 @@
         .settings-section h3 { color: var(--ios-text-main); border-bottom: 1px solid var(--ios-border); padding-bottom: 8px; font-weight: 700; margin-bottom: 15px; font-size:1.1em;}
         .note-text { font-size: 0.8em; color: var(--ios-text-sub); margin-top: -8px; margin-bottom: 15px; font-weight: 600;}
         .setting-list { list-style: none; padding: 0; margin: 0; }
-        .setting-list li { display: flex; justify-content: space-between; background: var(--glass-bg-solid); border: 1px solid var(--glass-border); padding: 15px; margin-bottom: 10px; border-radius: var(--ios-radius-md); align-items: center; box-shadow: var(--glass-shadow); }
-        .add-setting, .add-job-form { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; background: rgba(0,0,0,0.02); border: 1px solid var(--glass-border); padding: 15px; border-radius: var(--ios-radius-md);}
+        .setting-list li { display: flex; justify-content: space-between; background: var(--ios-surface-solid); padding: 15px; margin-bottom: 10px; border-radius: var(--ios-radius-md); align-items: center; box-shadow: 0 1px 6px rgba(10,41,71,0.04); }
+        .add-setting, .add-job-form { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; background: rgba(10,41,71,0.03); padding: 15px; border-radius: var(--ios-radius-md);}
         .flex-row { display: flex; gap: 10px; width: 100%; }
-        .add-setting input[type="text"], .add-job-form input { flex-grow: 1; padding: 12px; border: 1px solid var(--glass-border); border-radius: var(--ios-radius-sm); font-size: 0.95em; background: rgba(255,255,255,0.7); }
+        .add-setting input[type="text"], .add-job-form input { flex-grow: 1; padding: 12px; border: 1px solid var(--ios-border); border-radius: var(--ios-radius-sm); font-size: 0.95em; background: var(--ios-surface-solid); }
         .add-setting button, .add-job-form button { padding: 12px 15px; background: var(--ios-text-main); color: white; border: none; cursor: pointer; border-radius: var(--ios-radius-sm); font-weight: 600; transition: opacity 0.2s; text-align: center; }
         .add-setting button:hover, .add-job-form button:hover { opacity: 0.85; }
-        input[type="color"] { -webkit-appearance: none; border: none; width: 44px; height: 44px; border-radius: 50%; overflow: hidden; cursor: pointer; padding: 0; background: none; flex-shrink: 0; border: 1px solid var(--glass-border);}
+        input[type="color"] { -webkit-appearance: none; border: none; width: 44px; height: 44px; border-radius: 50%; overflow: hidden; cursor: pointer; padding: 0; background: none; flex-shrink: 0; }
         input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
-        input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
+        input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(10,41,71,0.15); }
 
-        /* スマホ用ボトムナビゲーション (Liquid Glass) */
+        /* スマホ用ボトムナビゲーション */
         .bottom-nav {
             display: none;
         }
 
+        /* ================================
+           ★ スマホ用レスポンシブ対応
+        ================================ */
         @media screen and (max-width: 768px) {
             .app-container {
                 flex-direction: column;
                 height: 100vh;
             }
             
-            /* ボトムナビ: スマホ特化のすりガラスUI */
             .bottom-nav {
                 display: flex;
                 justify-content: space-around;
                 align-items: center;
-                background: rgba(255, 255, 255, 0.45);
-                backdrop-filter: blur(40px);
-                -webkit-backdrop-filter: blur(40px);
-                border: 1px solid rgba(255, 255, 255, 0.6);
-                padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
-                border-radius: 35px;
+                background: #1a1a1a;
+                padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
+                border-radius: 40px;
                 margin: 0 15px 15px;
-                box-shadow: 0 15px 35px rgba(0,0,0,0.1), inset 0 1px 2px rgba(255,255,255,0.8);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
                 position: fixed;
                 bottom: 0;
                 left: 0;
@@ -266,20 +209,19 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                color: #7b7b82;
+                color: #888;
                 font-size: 0.7em;
-                font-weight: 700;
+                font-weight: 600;
                 cursor: pointer;
                 gap: 4px;
-                transition: color 0.2s, transform 0.2s;
+                transition: color 0.2s;
             }
             .nav-item.active {
-                color: var(--ios-accent); 
-                transform: translateY(-2px);
+                color: #2ecc71; 
             }
             .nav-item svg {
-                width: 26px;
-                height: 26px;
+                width: 24px;
+                height: 24px;
                 margin-bottom: 2px;
             }
 
@@ -295,8 +237,6 @@
                 height: 100%;
                 display: none; 
                 padding-bottom: 100px;
-                background: transparent;
-                backdrop-filter: none;
             }
 
             .sidebar.mobile-active {
@@ -309,36 +249,34 @@
             .salary-dashboard { padding: 15px; border-bottom: none;}
             
             .calendar-header { padding: 15px 15px 10px; }
-            .calendar-header input[type="month"] { font-size: 1.25em; padding: 6px 12px; }
-            .calendar-header button { width: 36px; height: 36px; font-size: 1em; }
+            .calendar-header button { width: 32px; height: 32px; font-size: 0.9em; }
             
             .search-container { padding: 0 15px 10px; }
             .search-results { left: 15px; right: 15px; }
 
             .calendar { padding: 0; }
-            .weekdays { margin-bottom: 0; padding: 8px 0; font-size: 0.75em; border-bottom: 1px solid var(--ios-border); background: var(--glass-bg); }
+            .weekdays { margin-bottom: 0; padding: 5px 0; font-size: 0.75em; border-bottom: 1px solid var(--ios-border); }
             .days { gap: 0; border-left: 1px solid var(--ios-border); border-top: none; }
             .day { 
-                padding: 4px; 
+                padding: 2px; 
                 border-radius: 0; 
                 border: none; 
                 border-right: 1px solid var(--ios-border); 
                 border-bottom: 1px solid var(--ios-border); 
                 box-shadow: none; 
-                min-height: 80px;
-                background: transparent;
-                backdrop-filter: none;
+                min-height: 70px;
             }
-            .day:hover { transform: none; box-shadow: none; background: rgba(255,255,255,0.3); }
-            .day.today { border: none; border-right: 1px solid var(--ios-border); border-bottom: 1px solid var(--ios-border); background: rgba(255,255,255,0.7); box-shadow: inset 0 0 0 1px var(--ios-accent); }
-            .day.today .day-number { width: 22px; height: 22px; font-size: 0.9em; margin: 0 auto 4px; }
-            .day-number { font-size: 0.85em; margin-bottom: 4px; align-self: center; } 
-            .events-container { gap: 2px; }
-            .event-label { font-size: 0.65em; padding: 2px 4px; border-radius: 4px; text-align: left; }
+            .day:hover { transform: none; box-shadow: none; }
+            .day.today { border: none; border-right: 1px solid var(--ios-border); border-bottom: 1px solid var(--ios-border); background: rgba(255,255,255,0.8); }
+            .day.today .day-number { width: 22px; height: 22px; font-size: 0.9em; margin: 0 auto 2px; }
+            .day-number { font-size: 0.8em; margin-bottom: 2px; align-self: center; } 
+            .events-container { gap: 1px; }
+            .event-label { font-size: 0.65em; padding: 2px 3px; border-radius: 2px; text-align: left; }
 
             .copy-banner { flex-direction: column; text-align: center; gap: 12px; padding: 15px; }
-            .modal-content { width: 92%; padding: 25px; }
+            .modal-content { width: 95%; padding: 20px; }
 
+            /* スマホ横長崩れ防止 */
             .time-inputs { flex-direction: column; align-items: stretch; gap: 8px; }
             .time-inputs span { display: none; }
             .flex-row { flex-direction: column; gap: 8px; }
@@ -348,6 +286,7 @@
 <body>
 
 <div class="app-container">
+    <!-- 左サイドバー -->
     <aside class="sidebar" id="sidebar">
         <h1 class="app-title">Schedule & Salary</h1>
         
@@ -368,17 +307,23 @@
                 <div class="salary-sub-amount">¥ <span id="remainingSalary">1,500,000</span></div>
             </div>
             <button class="settings-btn" onclick="toggleSettingsModal()">バイト・カテゴリ設定</button>
-            <button class="settings-btn" onclick="openGeneralSettingsModal()" style="background:transparent; border-color:var(--ios-text-sub); color:var(--ios-text-sub);">設定</button>
+            <button class="settings-btn" onclick="openGeneralSettingsModal()" style="background:transparent; border-color:#8B5E3C; color:#8B5E3C;">設定</button>
         </div>
     </aside>
 
+    <!-- メインコンテンツ -->
     <main class="main-content" id="mainContent">
         <div class="calendar-header">
             <button onclick="prevMonth()">◀</button>
-            <input type="month" id="monthYearPicker" onchange="jumpToMonth()">
+            <!-- PC版バグ対策: 透明な input type="month" をテキストの上に被せる -->
+            <div style="position: relative; display: inline-block; cursor: pointer;">
+                <div id="monthYearDisplay" style="font-size: 1.8em; font-weight: 700; color: var(--ios-text-main); letter-spacing: -0.5px; pointer-events: none;"></div>
+                <input type="month" id="monthYearPicker" onchange="jumpToMonth()" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;">
+            </div>
             <button onclick="nextMonth()">▶</button>
         </div>
 
+        <!-- 予定検索バー -->
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="予定を検索..." oninput="searchSchedules()" onblur="hideSearchResultsDelayed()" onfocus="searchSchedules()">
             <div id="searchResults" class="search-results"></div>
@@ -387,8 +332,8 @@
         <div id="copyModeBanner" class="copy-banner" style="display: none;">
             <span id="copyModeText">ペーストしたい日付を選択してください (選択中: 0日)</span>
             <div style="display: flex; gap: 10px;">
-                <button onclick="openMultiCopyModal()" style="color: #007AFF;">完了して次へ</button>
-                <button onclick="cancelCopyMode()" style="background: transparent; border: 1px solid white; color: white;">キャンセル</button>
+                <button onclick="openMultiCopyModal()" style="background: #2ecc71; color: #0A2947; font-weight: bold;">完了して次へ</button>
+                <button onclick="cancelCopyMode()" style="background: transparent; border: 1px solid #F3E4C9;">キャンセル</button>
             </div>
         </div>
 
@@ -400,18 +345,19 @@
         </div>
     </main>
 
-    <!-- ボトムナビゲーション (Liquid Glass) -->
+    <!-- スマホ用ボトムナビゲーション -->
     <nav class="bottom-nav">
         <div class="nav-item active" id="navCalendar" onclick="switchMobileTab('calendar')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
             <span>予定</span>
         </div>
         <div class="nav-item" id="navSalary" onclick="switchMobileTab('salary')">
-            <!-- 給与確認ロゴ変更：スタックコイン -->
+            <!-- 給与アイコンを￥(円)マークに変更 -->
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                <path d="M12 12V22"></path>
+                <path d="M8 12H16"></path>
+                <path d="M8 16H16"></path>
+                <path d="M7 4L12 12L17 4"></path>
             </svg>
             <span>給与確認</span>
         </div>
@@ -426,11 +372,11 @@
     </nav>
 </div>
 
-<!-- モーダル群 (背景クリックで閉じる対応) -->
+<!-- モーダル群 (背景クリックで確実に閉じるよう onclick を直接指定) -->
 <div id="dayListModal" class="modal" onclick="if(event.target === this) closeDayListModal()">
     <div class="modal-content day-list-modal-content">
         <div class="day-list-header">
-            <h2 id="dayListTitle">--月--日</h2>
+            <h2 id="dayListTitle">11月22日 日曜日</h2>
             <div class="header-actions">
                 <button class="add-schedule-btn" onclick="openScheduleModal(selectedDateGlobal)">+</button>
                 <span class="close-btn" style="position: static; margin-left: 5px;" onclick="closeDayListModal()">&times;</span>
@@ -449,7 +395,7 @@
                 <label>日付</label>
                 <input type="date" id="dateInput" required>
             </div>
-            <div id="multiDateDisplayArea" style="display: none; background: rgba(0,0,0,0.03); padding: 10px; border: 1px solid var(--glass-border); border-radius: 8px; max-height: 100px; overflow-y: auto;">
+            <div id="multiDateDisplayArea" style="display: none; background: #fcfbf8; padding: 10px; border: 1px solid #D3D4C0; border-radius: 4px; max-height: 100px; overflow-y: auto;">
                 <label>選択中の日付 (クリックで解除)</label>
                 <div id="selectedDatesList" class="selected-dates-tags"></div>
             </div>
@@ -465,8 +411,8 @@
             <select id="categoryInput"></select>
             
             <div id="editActions" style="display: none; justify-content: space-between; margin-top: 10px;">
-                <button class="action-btn" type="button" style="padding: 10px 15px; border-radius: 8px; border:1px solid #ccc; background: #fff;" onclick="startCopyModeFromEdit()">コピー</button>
-                <button class="action-btn" type="button" style="padding: 10px 15px; border-radius: 8px; color:#FF3B30; border:1px solid #FF3B30; background: #fff;" onclick="deleteScheduleFromEdit()">削除</button>
+                <button class="action-btn" type="button" style="padding: 10px 15px; border-radius: 8px;" onclick="startCopyModeFromEdit()">この予定をコピー</button>
+                <button class="action-btn" type="button" style="padding: 10px 15px; border-radius: 8px; color:red; border-color:red;" onclick="deleteScheduleFromEdit()">削除</button>
             </div>
             
             <button class="submit-btn" id="submitBtn" onclick="addOrUpdateSchedule()">予定を登録</button>
@@ -484,12 +430,12 @@
             <div class="add-setting">
                 <input type="hidden" id="editCategoryId">
                 <div class="flex-row" style="align-items: center;">
-                    <input type="color" id="newCategoryColor" value="#007AFF">
+                    <input type="color" id="newCategoryColor" value="#0A2947">
                     <input type="text" id="newCategoryName" placeholder="カテゴリ名">
                 </div>
                 <div class="flex-row">
                     <button id="catSubmitBtn" onclick="addOrUpdateCategory()">追加</button>
-                    <button id="catCancelBtn" onclick="cancelCategoryEdit()" style="display:none; background:transparent; border:1px solid var(--ios-text-sub); color:var(--ios-text-sub);">取消</button>
+                    <button id="catCancelBtn" onclick="cancelCategoryEdit()" style="display:none; background:transparent; border:1px solid #8B5E3C; color:#8B5E3C;">取消</button>
                 </div>
             </div>
         </div>
@@ -509,13 +455,14 @@
                 </div>
                 <div class="flex-row">
                     <button id="jobSubmitBtn" onclick="addOrUpdateJob()">追加</button>
-                    <button id="jobCancelBtn" onclick="cancelJobEdit()" style="display:none; background:transparent; border:1px solid var(--ios-text-sub); color:var(--ios-text-sub);">取消</button>
+                    <button id="jobCancelBtn" onclick="cancelJobEdit()" style="display:none; background:transparent; border:1px solid #8B5E3C; color:#8B5E3C;">取消</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- アプリ設定モーダル -->
 <div id="generalSettingsModal" class="modal" onclick="if(event.target === this) closeGeneralSettingsModal()">
     <div class="modal-content settings-modal-content">
         <span class="close-btn" onclick="closeGeneralSettingsModal()">&times;</span>
@@ -523,9 +470,9 @@
         <div class="form-group">
             <label>テーマカラー</label>
             <select id="themeSelect" onchange="changeTheme()">
-                <option value="default">デフォルト (ガラス/ベージュ系)</option>
-                <option value="dark">ダークモード (ガラス)</option>
-                <option value="blue">ブルー系 (ガラス)</option>
+                <option value="default">デフォルト (ベージュ系)</option>
+                <option value="dark">ダークモード</option>
+                <option value="blue">ブルー系</option>
             </select>
             
             <label>フォント</label>
@@ -543,9 +490,9 @@ const GAS_URL = "https://script.google.com/macros/s/AKfycby1jOAVLl--l8nrNN24qV4a
 
 let schedules = JSON.parse(localStorage.getItem('adv_schedules')) || [];
 let categories = JSON.parse(localStorage.getItem('adv_categories')) || [
-    { id: 1, name: '大学', color: '#007AFF' },
-    { id: 2, name: 'サークル', color: '#5AC8FA' },
-    { id: 3, name: 'プライベート', color: '#8E8E93' }
+    { id: 1, name: '大学', color: '#0A2947' },
+    { id: 2, name: 'サークル', color: '#D3D4C0' },
+    { id: 3, name: 'プライベート', color: '#999999' }
 ];
 let jobs = JSON.parse(localStorage.getItem('adv_jobs')) || [
     { id: 1, name: 'カフェ', wage: 1100, nightWage: 1375, transport: 500 }
@@ -569,12 +516,7 @@ if (fixIds(schedules)) localStorage.setItem('adv_schedules', JSON.stringify(sche
 if (fixIds(categories)) localStorage.setItem('adv_categories', JSON.stringify(categories));
 if (fixIds(jobs)) localStorage.setItem('adv_jobs', JSON.stringify(jobs));
 
-// モーダル背景クリック用のグローバル制御（HTMLのonclickで対応済みのため、こちらは予備的）
-window.addEventListener('click', function(event) {
-    if (event.target.classList.contains('modal')) {
-        event.target.style.display = 'none';
-    }
-});
+// ▼ 古いwindowのclickイベントリスナーは削除しました（各モーダルのonclickで処理するため）
 
 function switchMobileTab(tab) {
     const sidebar = document.getElementById('sidebar');
@@ -595,6 +537,7 @@ function switchMobileTab(tab) {
     }
 }
 
+// 予定検索機能
 function searchSchedules() {
     const query = document.getElementById('searchInput').value.toLowerCase();
     const resultsContainer = document.getElementById('searchResults');
@@ -612,8 +555,9 @@ function searchSchedules() {
     resultsContainer.innerHTML = '';
     
     if (filtered.length === 0) {
-        resultsContainer.innerHTML = '<div class="search-result-item" style="color: var(--ios-text-sub);">見つかりませんでした</div>';
+        resultsContainer.innerHTML = '<div class="search-result-item" style="color: #8B5E3C;">見つかりませんでした</div>';
     } else {
+        // 日付順にソート（最新が上）
         filtered.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(s => {
             const dateObj = new Date(s.date);
             const dateStr = `${dateObj.getFullYear()}/${dateObj.getMonth()+1}/${dateObj.getDate()}`;
@@ -629,13 +573,24 @@ function searchSchedules() {
 }
 
 function hideSearchResultsDelayed() {
-    setTimeout(() => { document.getElementById('searchResults').style.display = 'none'; }, 200);
+    // クリックイベントが発火する前に消えないよう遅延させる
+    setTimeout(() => {
+        document.getElementById('searchResults').style.display = 'none';
+    }, 200);
 }
 
-let touchStartX = 0; let touchEndX = 0;
+
+let touchStartX = 0;
+let touchEndX = 0;
 const calendarArea = document.getElementById('calendarArea');
-calendarArea.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
-calendarArea.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; handleSwipe(); }, {passive: true});
+calendarArea.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+}, {passive: true});
+calendarArea.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+}, {passive: true});
+
 function handleSwipe() {
     const threshold = 50;
     if (touchEndX < touchStartX - threshold) nextMonth(); 
@@ -647,43 +602,49 @@ function openGeneralSettingsModal() {
     document.getElementById('fontSelect').value = appSettings.font;
     document.getElementById('generalSettingsModal').style.display = 'flex';
 }
-function closeGeneralSettingsModal() { document.getElementById('generalSettingsModal').style.display = 'none'; }
-function changeTheme() { appSettings.theme = document.getElementById('themeSelect').value; applySettings(); saveData(); }
-function changeFont() { appSettings.font = document.getElementById('fontSelect').value; applySettings(); saveData(); }
+function closeGeneralSettingsModal() {
+    document.getElementById('generalSettingsModal').style.display = 'none';
+}
+function changeTheme() {
+    appSettings.theme = document.getElementById('themeSelect').value;
+    applySettings();
+    saveData();
+}
+function changeFont() {
+    appSettings.font = document.getElementById('fontSelect').value;
+    applySettings();
+    saveData();
+}
 function applySettings() {
     document.documentElement.style.setProperty('--font-family', appSettings.font);
     const root = document.documentElement;
     if (appSettings.theme === 'dark') {
-        root.style.setProperty('--ios-bg-start', '#1A1A1C');
+        root.style.setProperty('--ios-bg-start', '#1c1c1e');
         root.style.setProperty('--ios-bg-end', '#000000');
-        root.style.setProperty('--glass-bg', 'rgba(40, 40, 40, 0.4)');
-        root.style.setProperty('--glass-bg-solid', 'rgba(44, 44, 46, 0.75)');
-        root.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.1)');
-        root.style.setProperty('--glass-inset', 'inset 0 1px 1px rgba(255, 255, 255, 0.05)');
+        root.style.setProperty('--ios-surface', 'rgba(40, 40, 40, 0.7)');
+        root.style.setProperty('--ios-surface-solid', '#2c2c2e');
         root.style.setProperty('--ios-text-main', '#ffffff');
         root.style.setProperty('--ios-text-sub', '#a1a1a6');
         root.style.setProperty('--ios-accent', '#0a84ff');
         root.style.setProperty('--ios-danger', '#ff453a');
     } else if (appSettings.theme === 'blue') {
-        root.style.setProperty('--ios-bg-start', '#E3F2FD');
-        root.style.setProperty('--ios-bg-end', '#BBDEFB');
-        root.style.setProperty('--glass-bg', 'rgba(255, 255, 255, 0.4)');
-        root.style.setProperty('--glass-bg-solid', 'rgba(255, 255, 255, 0.7)');
-        root.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.6)');
-        root.style.setProperty('--ios-text-main', '#0D47A1');
-        root.style.setProperty('--ios-text-sub', '#546E7A');
-        root.style.setProperty('--ios-accent', '#1565C0');
-        root.style.setProperty('--ios-danger', '#D32F2F');
+        root.style.setProperty('--ios-bg-start', '#e0f2fe');
+        root.style.setProperty('--ios-bg-end', '#bae6fd');
+        root.style.setProperty('--ios-surface', 'rgba(255, 255, 255, 0.6)');
+        root.style.setProperty('--ios-surface-solid', 'rgba(255, 255, 255, 0.9)');
+        root.style.setProperty('--ios-text-main', '#0f172a');
+        root.style.setProperty('--ios-text-sub', '#475569');
+        root.style.setProperty('--ios-accent', '#0284c7');
+        root.style.setProperty('--ios-danger', '#e11d48');
     } else {
-        root.style.setProperty('--ios-bg-start', '#EAE6DF');
-        root.style.setProperty('--ios-bg-end', '#D0C9B6');
-        root.style.setProperty('--glass-bg', 'rgba(255, 255, 255, 0.35)');
-        root.style.setProperty('--glass-bg-solid', 'rgba(255, 255, 255, 0.65)');
-        root.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.6)');
-        root.style.setProperty('--ios-text-main', '#1C1C1E');
-        root.style.setProperty('--ios-text-sub', '#5C5C60');
-        root.style.setProperty('--ios-accent', '#007AFF');
-        root.style.setProperty('--ios-danger', '#FF3B30');
+        root.style.setProperty('--ios-bg-start', '#F3E4C9');
+        root.style.setProperty('--ios-bg-end', '#D3D4C0');
+        root.style.setProperty('--ios-surface', 'rgba(255, 255, 255, 0.55)');
+        root.style.setProperty('--ios-surface-solid', 'rgba(255, 255, 255, 0.9)');
+        root.style.setProperty('--ios-text-main', '#0A2947');
+        root.style.setProperty('--ios-text-sub', '#8B5E3C');
+        root.style.setProperty('--ios-accent', '#0A2947');
+        root.style.setProperty('--ios-danger', '#8B5E3C');
     }
 }
 
@@ -693,13 +654,17 @@ async function loadDataFromGAS() {
         const res = await fetch(GAS_URL);
         const data = await res.json();
         if (data && data.schedules) {
-            schedules = data.schedules || []; categories = data.categories || []; jobs = data.jobs || [];
+            schedules = data.schedules || [];
+            categories = data.categories || [];
+            jobs = data.jobs || [];
             localStorage.setItem('adv_schedules', JSON.stringify(schedules));
             localStorage.setItem('adv_categories', JSON.stringify(categories));
             localStorage.setItem('adv_jobs', JSON.stringify(jobs));
             init(); 
         }
-    } catch (e) { console.log("GASからの読み込みに失敗、ローカルデータを使用します", e); }
+    } catch (e) {
+        console.log("GASからの読み込みに失敗、ローカルデータを使用します", e);
+    }
 }
 
 function saveData() {
@@ -707,11 +672,14 @@ function saveData() {
     localStorage.setItem('adv_categories', JSON.stringify(categories));
     localStorage.setItem('adv_jobs', JSON.stringify(jobs));
     localStorage.setItem('adv_appSettings', JSON.stringify(appSettings));
+
     if (GAS_URL) {
         fetch(GAS_URL, {
-            method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain' },
             body: JSON.stringify({ schedules, categories, jobs })
-        }).catch(e => console.log("GAS保存エラー:", e));
+        }).catch(e => console.log("GASへの保存エラー:", e));
     }
 }
 
@@ -727,32 +695,48 @@ async function fetchHolidays() {
     try {
         const response = await fetch('https://holidays-jp.github.io/api/v1/date.json');
         holidays = await response.json();
-    } catch (e) {}
+    } catch (e) { console.log("祝日データの取得に失敗しました"); }
     renderCalendar();
 }
 
 function init() {
-    applySettings(); updateCategorySelect(); renderCategoriesSettings(); renderJobsSettings(); fetchHolidays();
+    applySettings();
+    updateCategorySelect();
+    renderCategoriesSettings();
+    renderJobsSettings();
+    fetchHolidays();
 }
 
 function renderCalendar() {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     
-    document.getElementById('monthYearPicker').value = `${year}-${String(month + 1).padStart(2, '0')}`;
+    // 年月表示テキストを更新
+    const displayEl = document.getElementById('monthYearDisplay');
+    if (displayEl) {
+        displayEl.innerText = `${year}年 ${month + 1}月`;
+    }
+    
+    // 隠れている input type="month" の値を更新
+    const picker = document.getElementById('monthYearPicker');
+    if (picker) {
+        picker.value = `${year}-${String(month + 1).padStart(2, '0')}`;
+    }
     
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
+    
     const calendarDays = document.getElementById('calendarDays');
     calendarDays.innerHTML = ''; 
     const today = new Date();
 
     for (let i = 0; i < firstDay; i++) {
-        calendarDays.innerHTML += `<div class="day" style="background: transparent; box-shadow: none; border: none; pointer-events: none;"></div>`;
+        calendarDays.innerHTML += `<div class="day" style="background-color: transparent; pointer-events: none; border: none;"></div>`;
     }
 
     for (let i = 1; i <= daysInMonth; i++) {
         const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+        
         let classNames = ['day'];
         if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) classNames.push('today');
         if (isCopyMode && multiSelectedDates.includes(dateStr)) classNames.push('multi-selected');
@@ -767,7 +751,7 @@ function renderCalendar() {
         let eventHtml = '';
         dayEvents.sort((a, b) => a.time.localeCompare(b.time)).forEach(event => {
             const cat = categories.find(c => c.name === event.category);
-            const color = cat ? cat.color : '#007AFF';
+            const color = cat ? cat.color : '#0A2947';
             eventHtml += `<div class="event-label" style="background-color: ${color};" onclick="event.stopPropagation(); openDayListModal('${dateStr}');">${event.title}</div>`;
         });
 
@@ -778,11 +762,14 @@ function renderCalendar() {
             </div>
         `;
     }
-    calculateSalaries(); updateCopyBannerText();
+    calculateSalaries();
+    updateCopyBannerText();
 }
 
 function prevMonth() { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); }
 function nextMonth() { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); }
+
+// 年月ピッカー変更時の処理
 function jumpToMonth() {
     const val = document.getElementById('monthYearPicker').value;
     if (val) {
@@ -794,20 +781,29 @@ function jumpToMonth() {
 
 function handleDayClick(dateStr) {
     if (isCopyMode) {
-        if (multiSelectedDates.includes(dateStr)) { multiSelectedDates = multiSelectedDates.filter(d => d !== dateStr); } 
-        else { multiSelectedDates.push(dateStr); multiSelectedDates.sort(); }
+        if (multiSelectedDates.includes(dateStr)) {
+            multiSelectedDates = multiSelectedDates.filter(d => d !== dateStr); 
+        } else {
+            multiSelectedDates.push(dateStr); 
+            multiSelectedDates.sort();
+        }
         renderCalendar(); 
-    } else { selectedDateGlobal = dateStr; openDayListModal(dateStr); }
+    } else {
+        selectedDateGlobal = dateStr;
+        openDayListModal(dateStr); 
+    }
 }
 
 function updateCopyBannerText() {
     if(!isCopyMode) return;
-    document.getElementById('copyModeText').innerText = `ペーストしたい日付を選択してください (選択中: ${multiSelectedDates.length}日)`;
+    const textElem = document.getElementById('copyModeText');
+    textElem.innerText = `ペーストしたい日付を選択してください (選択中: ${multiSelectedDates.length}日)`;
 }
 
 function openDayListModal(dateStr) {
     if (isCopyMode) return;
     selectedDateGlobal = dateStr;
+    
     const d = new Date(dateStr);
     const dayNames = ['日', '月', '火', '水', '木', '金', '土'];
     document.getElementById('dayListTitle').innerText = `${d.getMonth() + 1}月${d.getDate()}日 ${dayNames[d.getDay()]}曜日`;
@@ -821,13 +817,15 @@ function openDayListModal(dateStr) {
     } else {
         dayEvents.sort((a, b) => a.time.localeCompare(b.time)).forEach(event => {
             const cat = categories.find(c => c.name === event.category);
-            const color = cat ? cat.color : '#007AFF';
+            const color = cat ? cat.color : '#0A2947';
+            
             let salaryHtml = '';
             const job = jobs.find(j => j.name === event.category);
             if (job && event.endTime) {
                 const dailyPay = Math.round(calculateDailySalary(job, event.time, event.endTime));
                 salaryHtml = `<div class="day-list-item-salary">予定給与: ¥${dailyPay.toLocaleString()}</div>`;
             }
+
             list.innerHTML += `
                 <div class="day-list-item" onclick="editSchedule('${event.id}')">
                     <div class="day-list-item-color" style="background-color: ${color};"></div>
@@ -845,11 +843,13 @@ function openDayListModal(dateStr) {
     }
     document.getElementById('dayListModal').style.display = 'flex';
 }
+
 function closeDayListModal() { document.getElementById('dayListModal').style.display = 'none'; }
 
 function openScheduleModal(dateStr = null) {
     if (isCopyMode) return;
-    closeDayListModal(); editingId = null;
+    closeDayListModal(); 
+    editingId = null;
     document.getElementById('formTitle').innerText = '予定を追加';
     document.getElementById('submitBtn').innerText = '予定を登録';
     document.getElementById('singleDateInputArea').style.display = 'block';
@@ -861,23 +861,31 @@ function openScheduleModal(dateStr = null) {
     document.getElementById('titleInput').value = '';
     document.getElementById('scheduleModal').style.display = 'flex';
 }
+
 function closeScheduleModal() { document.getElementById('scheduleModal').style.display = 'none'; }
 
 function startCopyMode(id) {
     const schedule = schedules.find(s => String(s.id) === String(id));
     if (!schedule) return;
-    isCopyMode = true; copySourceData = { ...schedule }; multiSelectedDates = []; 
+    isCopyMode = true;
+    copySourceData = { ...schedule };
+    multiSelectedDates = []; 
     document.getElementById('copyModeBanner').style.display = 'flex';
     document.getElementById('scheduleModal').style.display = 'none'; 
-    closeDayListModal(); renderCalendar();
+    closeDayListModal();
+    renderCalendar();
 }
 function startCopyModeFromEdit() { if(editingId) startCopyMode(editingId); }
 function deleteScheduleFromEdit() {
-    if(editingId) { schedules = schedules.filter(s => String(s.id) !== String(editingId)); saveData(); renderCalendar(); closeScheduleModal(); }
+    if(editingId) {
+        schedules = schedules.filter(s => String(s.id) !== String(editingId));
+        saveData(); renderCalendar(); closeScheduleModal();
+    }
 }
 function cancelCopyMode() {
     isCopyMode = false; copySourceData = null; multiSelectedDates = [];
-    document.getElementById('copyModeBanner').style.display = 'none'; renderCalendar();
+    document.getElementById('copyModeBanner').style.display = 'none';
+    renderCalendar();
 }
 
 function openMultiCopyModal() {
@@ -896,6 +904,7 @@ function openMultiCopyModal() {
     multiSelectedDates.forEach(date => { list.innerHTML += `<span class="date-tag" onclick="removeMultiDate('${date}')">${date} ×</span>`; });
     document.getElementById('scheduleModal').style.display = 'flex';
 }
+
 function removeMultiDate(date) {
     multiSelectedDates = multiSelectedDates.filter(d => d !== date);
     if(multiSelectedDates.length === 0) document.getElementById('scheduleModal').style.display = 'none';
@@ -908,10 +917,13 @@ function addOrUpdateSchedule() {
     const endTime = document.getElementById('endTimeInput').value;
     const title = document.getElementById('titleInput').value;
     const category = document.getElementById('categoryInput').value;
+
     if (!time || !title) return alert("時刻とタイトルを入力してください");
 
     if (isCopyMode) {
-        multiSelectedDates.forEach(dateStr => { schedules.push({ id: Date.now() + Math.random(), date: dateStr, time, endTime, title, category }); });
+        multiSelectedDates.forEach(dateStr => {
+            schedules.push({ id: Date.now() + Math.random(), date: dateStr, time, endTime, title, category });
+        });
         cancelCopyMode(); 
     } else {
         const date = document.getElementById('dateInput').value;
@@ -919,7 +931,9 @@ function addOrUpdateSchedule() {
         if (editingId) {
             const index = schedules.findIndex(s => String(s.id) === String(editingId));
             if(index !== -1) schedules[index] = { id: editingId, date, time, endTime, title, category };
-        } else { schedules.push({ id: Date.now() + Math.random(), date, time, endTime, title, category }); }
+        } else {
+            schedules.push({ id: Date.now() + Math.random(), date, time, endTime, title, category });
+        }
         selectedDateGlobal = date; 
     }
     saveData(); closeScheduleModal(); renderCalendar();
@@ -959,7 +973,9 @@ function calculateDailySalary(job, startTimeStr, endTimeStr) {
         const timeOfDay = new Date(`2000-01-0${current.getDate()}T${String(current.getHours()).padStart(2,'0')}:${String(current.getMinutes()).padStart(2,'0')}:00`);
         if ((timeOfDay >= nightStart && timeOfDay <= new Date(`2000-01-01T23:59:59`)) || (timeOfDay >= new Date(`2000-01-02T00:00:00`) && timeOfDay < nightEnd)) {
             nightMin++;
-        } else { normalMin++; }
+        } else {
+            normalMin++;
+        }
         current.setMinutes(current.getMinutes() + 1);
     }
     return (normalMin / 60) * job.wage + (nightMin / 60) * job.nightWage + job.transport;
@@ -970,6 +986,7 @@ function calculateSalaries() {
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     const monthPrefix = `${year}-${month}`;
     const yearPrefix = `${year}`;
+    
     let monthly = 0, annual = 0, annualWithoutTransport = 0; 
     let jobMonthlyBreakdown = {}; 
 
@@ -979,8 +996,10 @@ function calculateSalaries() {
             if (job) {
                 const pay = calculateDailySalary(job, s.time, s.endTime);
                 const transport = job.transport || 0; 
+                
                 if (s.date.startsWith(yearPrefix)) {
-                    annual += pay; annualWithoutTransport += (pay - transport);
+                    annual += pay;
+                    annualWithoutTransport += (pay - transport);
                     if (s.date.startsWith(monthPrefix)) {
                         monthly += pay;
                         if (!jobMonthlyBreakdown[job.name]) jobMonthlyBreakdown[job.name] = 0;
@@ -994,6 +1013,7 @@ function calculateSalaries() {
     document.getElementById('monthlySalary').innerText = Math.round(monthly).toLocaleString();
     document.getElementById('annualSalary').innerText = Math.round(annual).toLocaleString();
     document.getElementById('remainingSalary').innerText = Math.round(Math.max(0, 1500000 - annualWithoutTransport)).toLocaleString();
+
     const breakdownEl = document.getElementById('jobSalaryBreakdown');
     if (breakdownEl) {
         breakdownEl.innerHTML = '';
@@ -1021,8 +1041,8 @@ function renderCategoriesSettings() {
         list.innerHTML += `<li>
             <span><span style="color:${c.color}; font-weight:bold;">●</span> ${c.name}</span>
             <div class="btn-row">
-                <button type="button" onclick="editCategory('${c.id}')" class="action-btn" style="background:#fff; border:1px solid #ccc; padding:6px 12px; border-radius:8px;">編集</button>
-                <button type="button" onclick="deleteCategory('${c.id}')" class="action-btn" style="color:#FF3B30; border:1px solid #FF3B30; background:#fff; padding:6px 12px; border-radius:8px;">削除</button>
+                <button type="button" onclick="editCategory('${c.id}')" class="action-btn">編集</button>
+                <button type="button" onclick="deleteCategory('${c.id}')" class="action-btn" style="color:red; border-color:red;">削除</button>
             </div>
         </li>`;
     });
@@ -1058,7 +1078,7 @@ function editCategory(id) {
 function cancelCategoryEdit() { 
     document.getElementById('editCategoryId').value = ''; 
     document.getElementById('newCategoryName').value = ''; 
-    document.getElementById('newCategoryColor').value = '#007AFF'; 
+    document.getElementById('newCategoryColor').value = '#0A2947'; 
     document.getElementById('catSubmitBtn').innerText = '追加'; 
     document.getElementById('catCancelBtn').style.display = 'none'; 
 }
@@ -1069,14 +1089,14 @@ function renderJobsSettings() {
     list.innerHTML = '';
     jobs.forEach(j => { 
         list.innerHTML += `<li style="display:flex; flex-direction:column; align-items:flex-start;">
-            <div style="width:100%; display:flex; justify-content:space-between; margin-bottom:8px;">
+            <div style="width:100%; display:flex; justify-content:space-between;">
                 <b>${j.name}</b>
                 <div class="btn-row">
-                    <button type="button" onclick="editJob('${j.id}')" class="action-btn" style="background:#fff; border:1px solid #ccc; padding:6px 12px; border-radius:8px;">編集</button>
-                    <button type="button" onclick="deleteJob('${j.id}')" class="action-btn" style="color:#FF3B30; border:1px solid #FF3B30; background:#fff; padding:6px 12px; border-radius:8px;">削除</button>
+                    <button type="button" onclick="editJob('${j.id}')" class="action-btn">編集</button>
+                    <button type="button" onclick="deleteJob('${j.id}')" class="action-btn" style="color:red; border-color:red;">削除</button>
                 </div>
             </div>
-            <span style="font-size:0.85em; color:var(--ios-text-sub);">基本:¥${j.wage} / 深夜:¥${j.nightWage} / 交通費:¥${j.transport}</span>
+            <span style="font-size:0.85em; color:#8B5E3C;">基本:¥${j.wage} / 深夜:¥${j.nightWage} / 交通費:¥${j.transport}</span>
         </li>`; 
     });
 }
@@ -1094,7 +1114,7 @@ function addOrUpdateJob() {
         if(index !== -1) jobs[index] = { id: idStr, name: name, wage: wage, nightWage: nightWage, transport: transport }; 
     } else { 
         if(!categories.find(c => c.name === name)) { 
-            categories.push({ id: Date.now() + Math.random(), name: name, color: '#FF9500' }); 
+            categories.push({ id: Date.now() + Math.random(), name: name, color: '#8B5E3C' }); 
             renderCategoriesSettings(); 
         } 
         jobs.push({ id: Date.now() + Math.random(), name: name, wage: wage, nightWage: nightWage, transport: transport }); 
