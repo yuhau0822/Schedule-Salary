@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Schedule & Salary</title>
     <style>
         /* ================================
@@ -46,7 +46,8 @@
         }
 
         .sidebar { 
-            width: 420px; /* ★以前の幅に拡張 */
+            width: 450px; /* ★幅を少し広げて文字の改行を防ぐ */
+            flex-shrink: 0; /* ★メイン画面に押されて縮むのを防ぐ */
             background: var(--ios-surface);
             backdrop-filter: var(--ios-blur);
             -webkit-backdrop-filter: var(--ios-blur);
@@ -75,9 +76,9 @@
         .job-salary-breakdown { list-style: none; padding: 0; margin: 0 0 12px 0; font-size: 0.85em; }
         .job-salary-breakdown li { display: flex; justify-content: space-between; padding: 6px 12px; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(10, 41, 71, 0.08); border-radius: var(--ios-radius-sm); margin-bottom: 5px; color: var(--ios-text-main); font-weight: 600; }
         .sub-salary { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; margin-bottom: 8px; box-shadow: none; border: 1px solid var(--ios-border); background: var(--ios-surface-solid); border-radius: var(--ios-radius-md); }
-        .salary-label { font-size: 0.85em; color: var(--ios-text-sub); font-weight: 600; }
+        .salary-label { font-size: 0.85em; color: var(--ios-text-sub); font-weight: 600; white-space: nowrap; }
         .salary-amount { font-size: 2.2em; font-weight: 700; color: var(--ios-text-main); margin-top: 5px; letter-spacing: -0.5px; }
-        .salary-sub-amount { font-size: 1.1em; font-weight: 600; color: var(--ios-text-main); }
+        .salary-sub-amount { font-size: 1.1em; font-weight: 600; color: var(--ios-text-main); white-space: nowrap; }
         .highlight .salary-sub-amount { color: var(--ios-danger); }
         .settings-btn { background: var(--ios-surface-solid); color: var(--ios-accent); border: 1px solid var(--ios-border); border-radius: var(--ios-radius-md); padding: 10px; cursor: pointer; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); width: 100%; margin-top: 10px; font-weight: 600; font-size: 0.9em; }
         .settings-btn:hover { background: var(--ios-accent); color: white; border-color: var(--ios-accent); }
@@ -88,7 +89,6 @@
         .page-content { flex-grow: 1; padding: 30px 40px; overflow-y: auto; display: none; flex-direction: column; }
         .page-content h2 { color: var(--ios-text-main); font-weight: 700; margin-top: 0; margin-bottom: 25px; text-align: center; }
 
-        /* ★ アクションボタン（編集・削除・コピー）のデザイン調整 */
         .btn-row { display: flex; gap: 8px; align-items: center; }
         .action-btn { 
             background: var(--ios-surface-solid); 
@@ -129,7 +129,6 @@
         .sun { color: var(--ios-danger); }
         .sat { color: var(--ios-text-sub); } 
         
-        /* 横線のみのカレンダーデザイン */
         .days { flex-grow: 1; display: grid; grid-template-columns: repeat(7, 1fr); grid-auto-rows: minmax(80px, auto); gap: 0; }
         .day { background: transparent; border-bottom: 1px solid var(--ios-border); padding: 10px 5px; display: flex; flex-direction: column; cursor: pointer; transition: background 0.2s; position: relative; overflow: hidden; }
         .day:hover { background: rgba(255,255,255,0.3); }
@@ -144,18 +143,16 @@
         .event-label { font-size: 0.75em; padding: 4px 8px; border-radius: 6px; color: white; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: auto; box-shadow: 0 1px 4px rgba(10,41,71,0.15); transition: opacity 0.2s; }
         .event-label:hover { opacity: 0.8; }
 
-        /* モーダル背景 */
+        /* モーダル */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 41, 71, 0.3); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 100; justify-content: center; align-items: center; cursor: pointer; }
         .modal[style*="display: flex"] .modal-content { animation: iosScaleUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes iosScaleUp { 0% { transform: scale(0.9) translateY(20px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
-        /* モーダルの中身 */
         .modal-content { cursor: default; background: rgba(243, 228, 201, 0.9); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); padding: 35px; border-radius: var(--ios-radius-lg); width: 90%; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: var(--ios-shadow); border: 1px solid rgba(255,255,255,0.6); }
         .schedule-modal-content { max-width: 420px; }
         .close-btn { position: absolute; top: 20px; right: 20px; background: rgba(10,41,71,0.08); width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.2em; cursor: pointer; color: var(--ios-text-sub); transition: background 0.2s; z-index: 10;}
         .close-btn:hover { background: rgba(10,41,71,0.15); color: var(--ios-text-main); }
         .modal h2 { margin-top: 0; margin-bottom: 25px; color: var(--ios-text-main); font-weight: 700; text-align: center;}
         
-        /* ★ フォームやリストの幅を100%に調整して余白を消す */
         .form-group { display: flex; flex-direction: column; gap: 18px; width: 100%; margin: 0 auto;}
         .form-group label { font-size: 0.85em; color: var(--ios-text-sub); margin-bottom: -12px; font-weight: 700;}
         .time-inputs { display: flex; flex-direction: row; align-items: center; gap: 10px; width: 100%; }
@@ -191,7 +188,6 @@
         .date-tag { background: var(--ios-accent); color: white; padding: 6px 12px; border-radius: 16px; font-size: 0.85em; font-weight: 600; cursor: pointer; transition: background 0.2s; }
         .date-tag:hover { background: var(--ios-danger); }
         
-        /* ★ 設定画面の幅を100%に */
         .settings-section { margin-bottom: 30px; width: 100%; }
         .settings-section h3 { color: var(--ios-text-main); border-bottom: 1px solid var(--ios-border); padding-bottom: 8px; font-weight: 700; margin-bottom: 15px; font-size:1.1em;}
         .note-text { font-size: 0.8em; color: var(--ios-text-sub); margin-top: -8px; margin-bottom: 15px; font-weight: 600;}
@@ -200,7 +196,8 @@
         .add-setting, .add-job-form { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; background: rgba(10,41,71,0.03); padding: 15px; border-radius: var(--ios-radius-md);}
         .flex-row { display: flex; gap: 10px; width: 100%; }
         .add-setting input[type="text"], .add-job-form input { flex-grow: 1; padding: 12px; border: 1px solid var(--ios-border); border-radius: var(--ios-radius-sm); font-size: 0.95em; background: var(--ios-surface-solid); color: var(--ios-text-main);}
-        .add-setting button, .add-job-form button { padding: 12px 15px; background: var(--ios-text-main); color: white; border: none; cursor: pointer; border-radius: var(--ios-radius-sm); font-weight: 600; transition: opacity 0.2s; text-align: center; }
+        /* ★ ボタンに flex: 1; を追加して幅を均等に揃える */
+        .add-setting button, .add-job-form button { flex: 1; padding: 12px 15px; background: var(--ios-text-main); color: white; border: none; cursor: pointer; border-radius: var(--ios-radius-sm); font-weight: 600; transition: opacity 0.2s; text-align: center; }
         .add-setting button:hover, .add-job-form button:hover { opacity: 0.85; }
         input[type="color"] { -webkit-appearance: none; border: none; width: 44px; height: 44px; border-radius: 50%; overflow: hidden; cursor: pointer; padding: 0; background: none; flex-shrink: 0; }
         input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
@@ -260,7 +257,7 @@
                 padding-bottom: 100px;
             }
 
-            .page-content { padding: 20px 15px 100px; }
+            .page-content { padding: calc(20px + env(safe-area-inset-top, 20px)) 15px 100px; }
             .page-content h2 { padding: 0; }
             
             .settings-section, .form-group { width: 100%; margin-bottom: 25px; }
@@ -291,10 +288,17 @@
                 padding-bottom: 100px;
             }
 
+            /* ★ スマホのノッチ（カメラ）対応のため上部余白を追加 */
+            .app-title {
+                padding-top: calc(30px + env(safe-area-inset-top, 30px));
+            }
+
             .sidebar.mobile-active { display: flex; }
             
             .salary-dashboard { padding: 15px; border-bottom: none;}
-            .calendar-header { padding: 15px 15px 10px; }
+            
+            /* ★ スマホのノッチ（カメラ）対応のため上部余白を追加 */
+            .calendar-header { padding: calc(15px + env(safe-area-inset-top, 30px)) 15px 10px; }
             .calendar-header button { width: 32px; height: 32px; font-size: 0.9em; }
             
             .search-container { padding: 0 15px 10px; }
@@ -312,16 +316,15 @@
             .events-container { gap: 1px; width: 100%; }
             .event-label { font-size: 0.65em; padding: 2px 3px; border-radius: 2px; text-align: left; }
 
-            .copy-banner { flex-direction: column; text-align: center; gap: 12px; padding: 15px; }
+            .copy-banner { flex-direction: column; text-align: center; gap: 12px; padding: calc(15px + env(safe-area-inset-top, 10px)) 15px 15px; }
             .modal-content { width: 95%; padding: 20px; }
             
-            .flex-row { flex-direction: column; gap: 8px; }
+            .flex-row { flex-direction: row; gap: 8px; } /* スマホでも横並びに */
         }
 
         /* ================================
            ★ PC用のポップアップ（モーダル）対応と背景ぼかし
         ================================ */
-        /* 背景ぼかし用のオーバーレイ */
         .page-overlay-bg {
             display: none;
             position: fixed;
@@ -369,7 +372,7 @@
             .pc-close-btn:hover { background: rgba(10,41,71,0.15); color: var(--ios-text-main); }
         }
         @media screen and (max-width: 768px) {
-            .pc-close-btn, .page-overlay-bg { display: none !important; } /* スマホでは非表示 */
+            .pc-close-btn, .page-overlay-bg { display: none !important; }
         }
     </style>
 </head>
@@ -565,7 +568,6 @@
             <span style="font-weight: bold; color: var(--ios-text-sub);">月</span>
         </div>
         <button class="submit-btn" onclick="applyMonthPicker()" style="margin-top: 20px;">移動する</button>
-        <!-- ★ 「今日に戻る」ボタンをここへ移動 -->
         <button class="submit-btn secondary-btn" onclick="goToToday(); closeMonthPickerModal();">今日に戻る</button>
     </div>
 </div>
@@ -632,7 +634,6 @@ let jobs = JSON.parse(localStorage.getItem('adv_jobs')) || [
 
 let appSettings = JSON.parse(localStorage.getItem('adv_appSettings')) || { theme: 'default', font: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif" };
 
-// ★ 30種類の配色データ
 const colorThemes = {
     'default': { bg1: '#F3E4C9', bg2: '#D3D4C0', txtMain: '#0A2947', txtSub: '#8B5E3C' },
     'ch1': { bg1: '#FDF6F0', bg2: '#F8E2CF', txtMain: '#7B506F', txtSub: '#955D5D' },
@@ -693,7 +694,6 @@ function switchTab(tab) {
     
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
-    // PC表示用オーバーレイの制御
     if(!isMobile && (tab === 'category' || tab === 'settings')) {
         overlayBg.style.display = 'block';
     } else {
