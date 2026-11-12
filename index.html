@@ -195,7 +195,19 @@
         .setting-list li { display: flex; justify-content: space-between; background: var(--ios-surface-solid); padding: 15px; margin-bottom: 10px; border-radius: var(--ios-radius-md); align-items: center; box-shadow: 0 1px 6px rgba(10,41,71,0.04); }
         .add-setting, .add-job-form { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; background: rgba(10,41,71,0.03); padding: 15px; border-radius: var(--ios-radius-md);}
         .flex-row { display: flex; gap: 10px; width: 100%; }
-        .add-setting input[type="text"], .add-job-form input { flex-grow: 1; padding: 12px; border: 1px solid var(--ios-border); border-radius: var(--ios-radius-sm); font-size: 0.95em; background: var(--ios-surface-solid); color: var(--ios-text-main);}
+
+        .add-setting input[type="text"], .add-job-form input { 
+            flex: 1 1 0; /* ★ここを変更（均等幅にする） */
+            width: 100%; /* ★ここを追加 */
+            padding: 12px; 
+            border: 1px solid var(--ios-border); 
+            border-radius: var(--ios-radius-sm); 
+            font-size: 0.95em; 
+            background: var(--ios-surface-solid); 
+            color: var(--ios-text-main);
+            box-sizing: border-box; /* ★念のため追加 */
+        }
+        
         /* ★ ボタンに flex: 1; を追加して幅を均等に揃える */
         .add-setting button, .add-job-form button { flex: 1; padding: 12px 15px; background: var(--ios-text-main); color: white; border: none; cursor: pointer; border-radius: var(--ios-radius-sm); font-weight: 600; transition: opacity 0.2s; text-align: center; }
         .add-setting button:hover, .add-job-form button:hover { opacity: 0.85; }
@@ -257,7 +269,7 @@
                 padding-bottom: 100px;
             }
 
-            .page-content { padding: calc(20px + env(safe-area-inset-top, 20px)) 15px 100px; }
+            .page-content { padding: calc(45px + env(safe-area-inset-top, 30px)) 15px 100px; } /* ★上部余白を45pxに増加 */
             .page-content h2 { padding: 0; }
             
             .settings-section, .form-group { width: 100%; margin-bottom: 25px; }
@@ -288,17 +300,17 @@
                 padding-bottom: 100px;
             }
 
-            /* ★ スマホのノッチ（カメラ）対応のため上部余白を追加 */
+            /* ★ スマホのノッチ（カメラ）対応のため上部余白をさらに追加 */
             .app-title {
-                padding-top: calc(30px + env(safe-area-inset-top, 30px));
+                padding-top: calc(45px + env(safe-area-inset-top, 30px)); /* ★30pxから45pxへ */
             }
 
             .sidebar.mobile-active { display: flex; }
             
             .salary-dashboard { padding: 15px; border-bottom: none;}
             
-            /* ★ スマホのノッチ（カメラ）対応のため上部余白を追加 */
-            .calendar-header { padding: calc(15px + env(safe-area-inset-top, 30px)) 15px 10px; }
+            /* ★ カレンダーヘッダーの上部余白をさらに追加 */
+            .calendar-header { padding: calc(35px + env(safe-area-inset-top, 30px)) 15px 10px; } /* ★15pxから35pxへ */
             .calendar-header button { width: 32px; height: 32px; font-size: 0.9em; }
             
             .search-container { padding: 0 15px 10px; }
@@ -316,8 +328,11 @@
             .events-container { gap: 1px; width: 100%; }
             .event-label { font-size: 0.65em; padding: 2px 3px; border-radius: 2px; text-align: left; }
 
-            .copy-banner { flex-direction: column; text-align: center; gap: 12px; padding: calc(15px + env(safe-area-inset-top, 10px)) 15px 15px; }
-            .modal-content { width: 95%; padding: 20px; }
+            .copy-banner { flex-direction: column; text-align: center; gap: 12px; padding: calc(35px + env(safe-area-inset-top, 20px)) 15px 15px; } /* ★15pxから35pxへ */
+            
+            /* ★ モーダルの閉じるボタンが上に寄りすぎないように調整 */
+            .modal-content { width: 95%; padding: 25px 20px 20px; }
+            .close-btn { top: 12px; right: 12px; }
             
             .flex-row { flex-direction: row; gap: 8px; } /* スマホでも横並びに */
         }
