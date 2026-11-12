@@ -46,7 +46,7 @@
         }
 
         .sidebar { 
-            width: 380px; 
+            width: 420px; /* ★以前の幅に拡張 */
             background: var(--ios-surface);
             backdrop-filter: var(--ios-blur);
             -webkit-backdrop-filter: var(--ios-blur);
@@ -87,6 +87,23 @@
         /* 設定ページ用のコンテナスタイル */
         .page-content { flex-grow: 1; padding: 30px 40px; overflow-y: auto; display: none; flex-direction: column; }
         .page-content h2 { color: var(--ios-text-main); font-weight: 700; margin-top: 0; margin-bottom: 25px; text-align: center; }
+
+        /* ★ アクションボタン（編集・削除・コピー）のデザイン調整 */
+        .btn-row { display: flex; gap: 8px; align-items: center; }
+        .action-btn { 
+            background: var(--ios-surface-solid); 
+            color: var(--ios-accent); 
+            border: 1px solid var(--ios-border); 
+            padding: 6px 12px; 
+            border-radius: var(--ios-radius-sm); 
+            font-size: 0.85em; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+        }
+        .action-btn:hover { background: var(--ios-accent); color: white; border-color: var(--ios-accent); }
+        .action-btn.delete-btn { color: #e74c3c; border-color: rgba(231, 76, 60, 0.3); }
+        .action-btn.delete-btn:hover { background: #e74c3c; color: white; border-color: #e74c3c; }
 
         .copy-banner { background: rgba(10, 41, 71, 0.85); backdrop-filter: var(--ios-blur); -webkit-backdrop-filter: var(--ios-blur); color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 0.95em; font-weight: 600; z-index: 5; }
         .copy-banner button { background: var(--ios-danger); color: white; border: none; padding: 8px 16px; border-radius: var(--ios-radius-sm); cursor: pointer; font-weight: 600; transition: opacity 0.2s; }
@@ -138,7 +155,8 @@
         .close-btn:hover { background: rgba(10,41,71,0.15); color: var(--ios-text-main); }
         .modal h2 { margin-top: 0; margin-bottom: 25px; color: var(--ios-text-main); font-weight: 700; text-align: center;}
         
-        .form-group { display: flex; flex-direction: column; gap: 18px; max-width: 500px; margin: 0 auto; width: 100%;}
+        /* ★ フォームやリストの幅を100%に調整して余白を消す */
+        .form-group { display: flex; flex-direction: column; gap: 18px; width: 100%; margin: 0 auto;}
         .form-group label { font-size: 0.85em; color: var(--ios-text-sub); margin-bottom: -12px; font-weight: 700;}
         .time-inputs { display: flex; flex-direction: row; align-items: center; gap: 10px; width: 100%; }
         .time-inputs input { flex: 1; min-width: 0; }
@@ -173,7 +191,8 @@
         .date-tag { background: var(--ios-accent); color: white; padding: 6px 12px; border-radius: 16px; font-size: 0.85em; font-weight: 600; cursor: pointer; transition: background 0.2s; }
         .date-tag:hover { background: var(--ios-danger); }
         
-        .settings-section { margin-bottom: 30px; max-width: 500px; margin-left: auto; margin-right: auto;}
+        /* ★ 設定画面の幅を100%に */
+        .settings-section { margin-bottom: 30px; width: 100%; }
         .settings-section h3 { color: var(--ios-text-main); border-bottom: 1px solid var(--ios-border); padding-bottom: 8px; font-weight: 700; margin-bottom: 15px; font-size:1.1em;}
         .note-text { font-size: 0.8em; color: var(--ios-text-sub); margin-top: -8px; margin-bottom: 15px; font-weight: 600;}
         .setting-list { list-style: none; padding: 0; margin: 0; }
@@ -241,21 +260,12 @@
                 padding-bottom: 100px;
             }
 
-            /* ★ カテゴリ画面・設定画面 左右いっぱいまで広げる対応 */
-            .page-content { padding: 20px 15px 100px; } /* 給与確認画面と同じ左右15pxの余白に */
+            .page-content { padding: 20px 15px 100px; }
             .page-content h2 { padding: 0; }
             
-            /* 中央寄せ制限を解除して100%に広げる */
-            .settings-section, .form-group { 
-                max-width: 100%; 
-                margin-left: 0; 
-                margin-right: 0; 
-                width: 100%;
-                margin-bottom: 25px;
-            }
+            .settings-section, .form-group { width: 100%; margin-bottom: 25px; }
             .settings-section h3, .note-text { padding: 0; }
             
-            /* リスト全体を角丸にして、幅いっぱいにする */
             .setting-list { 
                 border-radius: var(--ios-radius-md); 
                 overflow: hidden; 
@@ -265,12 +275,9 @@
             .setting-list li { border-radius: 0; margin-bottom: 1px; border: none; }
             .setting-list li:last-child { margin-bottom: 0; }
             
-            /* 入力フォーム部分も幅いっぱいの角丸に */
             .add-setting, .add-job-form { 
                 border-radius: var(--ios-radius-md); 
                 margin-top: 15px; 
-                margin-left: 0; 
-                margin-right: 0; 
                 width: 100%;
                 box-sizing: border-box;
             }
@@ -296,11 +303,7 @@
             .calendar { padding: 0; }
             .weekdays { padding: 5px 0; font-size: 0.75em; border-bottom: 1px solid var(--ios-border); margin-bottom: 0; }
             
-            .day { 
-                padding: 2px; 
-                min-height: 70px;
-                align-items: center; 
-            }
+            .day { padding: 2px; min-height: 70px; align-items: center; }
             .day:hover { background: transparent; }
             .day.today { background: rgba(255,255,255,0.4); }
             .day.today .day-number { width: 22px; height: 22px; font-size: 0.9em; margin: 0 auto 2px; }
@@ -316,8 +319,19 @@
         }
 
         /* ================================
-           ★ PC用のポップアップ（モーダル）対応
+           ★ PC用のポップアップ（モーダル）対応と背景ぼかし
         ================================ */
+        /* 背景ぼかし用のオーバーレイ */
+        .page-overlay-bg {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(10, 41, 71, 0.3);
+            backdrop-filter: var(--ios-blur);
+            -webkit-backdrop-filter: var(--ios-blur);
+            z-index: 90;
+        }
+
         @media screen and (min-width: 769px) {
             .page-content {
                 position: absolute;
@@ -325,7 +339,7 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 width: 80%;
-                max-width: 600px;
+                max-width: 700px;
                 max-height: 85vh;
                 background: rgba(243, 228, 201, 0.95);
                 backdrop-filter: var(--ios-blur);
@@ -355,7 +369,7 @@
             .pc-close-btn:hover { background: rgba(10,41,71,0.15); color: var(--ios-text-main); }
         }
         @media screen and (max-width: 768px) {
-            .pc-close-btn { display: none; } /* スマホでは非表示 */
+            .pc-close-btn, .page-overlay-bg { display: none !important; } /* スマホでは非表示 */
         }
     </style>
 </head>
@@ -418,6 +432,9 @@
             <div class="days" id="calendarDays"></div>
         </div>
     </main>
+
+    <!-- ★ 設定画面用のPC背景ぼかしオーバーレイ -->
+    <div id="pageOverlayBg" class="page-overlay-bg" onclick="switchTab('calendar')"></div>
 
     <!-- バイト・カテゴリ設定画面 -->
     <main class="page-content" id="categoryContent">
@@ -590,9 +607,9 @@
             <label>カテゴリ</label>
             <select id="categoryInput"></select>
             
-            <div id="editActions" style="display: none; justify-content: space-between; margin-top: 10px;">
-                <button class="action-btn" type="button" style="padding: 10px 15px; border-radius: 8px; flex: 1; margin-right: 10px;" onclick="startCopyModeFromEdit()">この予定をコピー</button>
-                <button class="action-btn" type="button" style="padding: 10px 15px; border-radius: 8px; color:red; border:color:red; flex: 1;" onclick="deleteScheduleFromEdit()">削除</button>
+            <div id="editActions" style="display: none; justify-content: space-between; margin-top: 10px; gap: 10px;">
+                <button class="action-btn" type="button" style="flex: 1; padding: 12px;" onclick="startCopyModeFromEdit()">この予定をコピー</button>
+                <button class="action-btn delete-btn" type="button" style="flex: 1; padding: 12px;" onclick="deleteScheduleFromEdit()">削除</button>
             </div>
             
             <button class="submit-btn" id="submitBtn" onclick="addOrUpdateSchedule()">予定を登録</button>
@@ -615,7 +632,7 @@ let jobs = JSON.parse(localStorage.getItem('adv_jobs')) || [
 
 let appSettings = JSON.parse(localStorage.getItem('adv_appSettings')) || { theme: 'default', font: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif" };
 
-// ★ 30種類の配色データ（Colorhuntから厳選）
+// ★ 30種類の配色データ
 const colorThemes = {
     'default': { bg1: '#F3E4C9', bg2: '#D3D4C0', txtMain: '#0A2947', txtSub: '#8B5E3C' },
     'ch1': { bg1: '#FDF6F0', bg2: '#F8E2CF', txtMain: '#7B506F', txtSub: '#955D5D' },
@@ -667,13 +684,21 @@ if (fixIds(categories)) localStorage.setItem('adv_categories', JSON.stringify(ca
 if (fixIds(jobs)) localStorage.setItem('adv_jobs', JSON.stringify(jobs));
 
 function switchTab(tab) {
-    const isMobile = window.innerWidth <= 768; // スマホかどうか判定
+    const isMobile = window.innerWidth <= 768; 
     const sidebar = document.getElementById('sidebar');
     const mainCal = document.getElementById('mainContent');
     const mainCat = document.getElementById('categoryContent');
     const mainSet = document.getElementById('settingsContent');
+    const overlayBg = document.getElementById('pageOverlayBg');
     
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+    // PC表示用オーバーレイの制御
+    if(!isMobile && (tab === 'category' || tab === 'settings')) {
+        overlayBg.style.display = 'block';
+    } else {
+        overlayBg.style.display = 'none';
+    }
 
     if(tab === 'calendar') {
         sidebar.classList.remove('mobile-active');
@@ -689,13 +714,13 @@ function switchTab(tab) {
         document.getElementById('navSalary').classList.add('active');
     } else if(tab === 'category') {
         sidebar.classList.remove('mobile-active');
-        mainCal.style.display = isMobile ? 'none' : 'flex'; // PCならカレンダーを残す
+        mainCal.style.display = isMobile ? 'none' : 'flex'; 
         mainCat.style.display = 'flex';
         mainSet.style.display = 'none';
         document.getElementById('navCategory').classList.add('active');
     } else if(tab === 'settings') {
         sidebar.classList.remove('mobile-active');
-        mainCal.style.display = isMobile ? 'none' : 'flex'; // PCならカレンダーを残す
+        mainCal.style.display = isMobile ? 'none' : 'flex'; 
         mainCat.style.display = 'none';
         mainSet.style.display = 'flex';
         document.getElementById('themeSelect').value = appSettings.theme || 'default';
@@ -784,7 +809,6 @@ function applySettings() {
     root.style.setProperty('--ios-accent', t.txtMain);
     root.style.setProperty('--ios-danger', t.txtSub);
     
-    // 暗い背景の場合は表面色を調整
     if (t.bg1 === '#222831' || t.bg1 === '#1A1A2E' || t.bg1 === '#2B2E4A' || t.bg1 === '#393E46' || t.bg1 === '#3F3B6C') {
         root.style.setProperty('--ios-surface', 'rgba(34, 40, 49, 0.7)');
         root.style.setProperty('--ios-surface-solid', t.bg2);
@@ -1198,7 +1222,7 @@ function renderCategoriesSettings() {
             <span><span style="color:${c.color}; font-weight:bold;">●</span> ${c.name}</span>
             <div class="btn-row">
                 <button type="button" onclick="editCategory('${c.id}')" class="action-btn">編集</button>
-                <button type="button" onclick="deleteCategory('${c.id}')" class="action-btn" style="color:red; border-color:red;">削除</button>
+                <button type="button" onclick="deleteCategory('${c.id}')" class="action-btn delete-btn">削除</button>
             </div>
         </li>`;
     });
@@ -1245,14 +1269,14 @@ function renderJobsSettings() {
     list.innerHTML = '';
     jobs.forEach(j => { 
         list.innerHTML += `<li style="display:flex; flex-direction:column; align-items:flex-start;">
-            <div style="width:100%; display:flex; justify-content:space-between;">
-                <b>${j.name}</b>
+            <div style="width:100%; display:flex; justify-content:space-between; margin-bottom:6px;">
+                <b style="padding-top:4px;">${j.name}</b>
                 <div class="btn-row">
                     <button type="button" onclick="editJob('${j.id}')" class="action-btn">編集</button>
-                    <button type="button" onclick="deleteJob('${j.id}')" class="action-btn" style="color:red; border-color:red;">削除</button>
+                    <button type="button" onclick="deleteJob('${j.id}')" class="action-btn delete-btn">削除</button>
                 </div>
             </div>
-            <span style="font-size:0.85em; color:#8B5E3C;">基本:¥${j.wage} / 深夜:¥${j.nightWage} / 交通費:¥${j.transport}</span>
+            <span style="font-size:0.85em; color:var(--ios-text-sub);">基本:¥${j.wage} / 深夜:¥${j.nightWage} / 交通費:¥${j.transport}</span>
         </li>`; 
     });
 }
