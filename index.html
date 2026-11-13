@@ -1158,6 +1158,7 @@ function calculateDailySalary(job, startTimeStr, endTimeStr) {
     const nightEnd = new Date(`2000-01-02T05:00:00`);
     let normalMin = 0, nightMin = 0;
     let current = new Date(start);
+    
     while (current < end) {
         const timeOfDay = new Date(`2000-01-0${current.getDate()}T${String(current.getHours()).padStart(2,'0')}:${String(current.getMinutes()).padStart(2,'0')}:00`);
         if ((timeOfDay >= nightStart && timeOfDay <= new Date(`2000-01-01T23:59:59`)) || (timeOfDay >= new Date(`2000-01-02T00:00:00`) && timeOfDay < nightEnd)) {
@@ -1167,8 +1168,31 @@ function calculateDailySalary(job, startTimeStr, endTimeStr) {
         }
         current.setMinutes(current.getMinutes() + 1);
     }
+
+    // --- 休憩時間の計算（拘束時間ベース） ---
+    const totalHours = (normalMin + nightMin) / 60;
+    let breakMin = 0;
+    
+    if (totalHours >= 8) {
+        breakMin = 60;
+    } else if (totalHours >= 7) {
+        breakMin = 45;
+    } else if (totalHours >= 6.5) {
+        breakMin = 30;
+    }
+
+    // 休憩時間を時給の発生しない時間として差し引く（通常時間から優先して引く）
+    if (normalMin >= breakMin) {
+        normalMin -= breakMin;
+    } else {
+        // 通常時間より休憩時間の方が長い場合は、超過分を深夜時間から引く
+        nightMin -= (breakMin - normalMin);
+        normalMin = 0;
+    }
+
     return (normalMin / 60) * job.wage + (nightMin / 60) * job.nightWage + job.transport;
 }
+
 
 function calculateSalaries() {
     const year = currentDate.getFullYear();
